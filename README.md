@@ -6,3 +6,4 @@ Desgin:
 Render Graph support
 Data driven render pipeline
 Shader reloading and debugging support
+Blindless or GPU dirven render pipeline

@@ -3,9 +3,27 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Source\CLRMain.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Renderer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GraphicsCore.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Source\CLRMain.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Renderer.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GraphicsCore.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">
@@ -36,6 +54,9 @@
   <ItemGroup>
     <Filter Include="Assets">
       <UniqueIdentifier>{db9086fe-bacc-4437-8272-1aa6642082db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{8f12c85d-b35b-4dd7-995a-09d7099c6dbb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

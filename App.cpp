@@ -1,5 +1,7 @@
 #include "pch.h"
 
+#include <CLRMain.h>
+
 using namespace winrt;
 
 using namespace Windows;
@@ -9,24 +11,33 @@ using namespace Windows::UI;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::Composition;
 
+using namespace Windows::ApplicationModel;
+using namespace Windows::ApplicationModel::Activation;
+
+using namespace CLR;
+
 struct App : implements<App, IFrameworkViewSource, IFrameworkView>
 {
-    CompositionTarget m_target{ nullptr };
-    VisualCollection m_visuals{ nullptr };
-    Visual m_selected{ nullptr };
-    float2 m_offset{};
-
     IFrameworkView CreateView()
     {
         return *this;
     }
 
-    void Initialize(CoreApplicationView const &)
+    void Initialize(CoreApplicationView const& applicationView)
     {
+        applicationView.Activated({ this, &App::OnActivated });
+
+        CoreApplication::Suspending({ this, &App::OnSuspending });
+
+        CoreApplication::Resuming({ this, &App::OnResuming });
     }
 
     void Load(hstring const&)
     {
+        if (main == nullptr)
+        {
+            main = winrt::make_self<CLRMain>();
+        }
     }
 
     void Uninitialize()
@@ -42,7 +53,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         dispatcher.ProcessEvents(CoreProcessEventsOption::ProcessUntilQuit);
     }
 
-    void SetWindow(CoreWindow const & window)
+    void SetWindow(CoreWindow const& window)
     {
         Compositor compositor;
         ContainerVisual root = compositor.CreateContainerVisual();
@@ -59,7 +70,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         });
     }
 
-    void OnPointerPressed(IInspectable const &, PointerEventArgs const & args)
+    void OnPointerPressed(IInspectable const&, PointerEventArgs const& args)
     {
         float2 const point = args.CurrentPoint().Position();
 
@@ -90,18 +101,18 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         }
     }
 
-    void OnPointerMoved(IInspectable const &, PointerEventArgs const & args)
+    void OnPointerMoved(IInspectable const&, PointerEventArgs const& args)
     {
         if (m_selected)
         {
             float2 const point = args.CurrentPoint().Position();
 
             m_selected.Offset(
-            {
-                point.x + m_offset.x,
-                point.y + m_offset.y,
-                0.0f
-            });
+                {
+                    point.x + m_offset.x,
+                    point.y + m_offset.y,
+                    0.0f
+                });
         }
     }
 
@@ -125,17 +136,17 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         float const BlockSize = 100.0f;
 
         visual.Size(
-        {
-            BlockSize,
-            BlockSize
-        });
+            {
+                BlockSize,
+                BlockSize
+            });
 
         visual.Offset(
-        {
-            point.x - BlockSize / 2.0f,
-            point.y - BlockSize / 2.0f,
-            0.0f,
-        });
+            {
+                point.x - BlockSize / 2.0f,
+                point.y - BlockSize / 2.0f,
+                0.0f,
+            });
 
         m_visuals.InsertAtTop(visual);
 
@@ -143,6 +154,47 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         m_offset.x = -BlockSize / 2.0f;
         m_offset.y = -BlockSize / 2.0f;
     }
+
+    void OnActivated(CoreApplicationView const& /* applicationView */, IActivatedEventArgs const& /* args */)
+    {
+        CoreWindow window = CoreWindow::GetForCurrentThread();
+        window.Activate();
+    }
+
+    winrt::fire_and_forget OnSuspending(IInspectable const& /* sender */, SuspendingEventArgs const& args)
+    {
+        //auto lifetime = get_strong();
+
+        //// Save app state asynchronously after requesting a deferral. Holding a deferral
+        //// indicates that the application is busy performing suspending operations. Be
+        //// aware that a deferral may not be held indefinitely. After about five seconds,
+        //// the app will be forced to exit.
+        //SuspendingDeferral deferral = args.SuspendingOperation().GetDeferral();
+
+        co_await winrt::resume_background();
+
+        //m_deviceResources->Trim();
+
+        //m_main->Suspend();
+
+        //deferral.Complete();
+    }
+
+    void OnResuming(IInspectable const& /* sender */, IInspectable const& /* args */)
+    {
+        // Restore any data or state that was unloaded on suspend. By default, data
+        // and state are persisted when resuming from suspend. Note that this event
+        // does not occur if the app was previously terminated.
+        //m_main->Resume();
+    }
+
+    CompositionTarget m_target{ nullptr };
+    VisualCollection m_visuals{ nullptr };
+    Visual m_selected{ nullptr };
+    float2 m_offset{};
+
+private:
+    winrt::com_ptr<CLRMain> main;
 };
 
 int __stdcall wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
