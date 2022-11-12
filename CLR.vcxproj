@@ -120,6 +120,8 @@
     <ClInclude Include="Source\CLRMain.h" />
     <ClInclude Include="Source\GraphicsCore.h" />
     <ClInclude Include="Source\Renderer.h" />
+    <ClInclude Include="Source\Utils.h" />
+    <ClInclude Include="Source\Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
