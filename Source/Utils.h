@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 namespace CLR
 {
     template<typename... Args>
