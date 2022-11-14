@@ -12,6 +12,9 @@
     <ClCompile Include="Source\GraphicsCore.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Utils.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
