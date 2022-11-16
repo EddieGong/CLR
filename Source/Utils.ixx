@@ -1,14 +1,13 @@
-#pragma once
+export module Utils;
 
 namespace CLR
 {
-    template<typename... Args>
+    export template<typename... Args>
     void UNUSED_PARAMS(const Args& ...arg)
     {
         (arg, ...);
     }
 
-    // std::cerr is not buffered
     template<bool USE_FILE>
     void LOG_ERROR(const char* error);
 

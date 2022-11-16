@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="pch.cpp" />
     <ClCompile Include="Source\CLRMain.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -12,12 +11,20 @@
     <ClCompile Include="Source\GraphicsCore.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Level.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Level.ixx">
+      <Filter>Source</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Utils.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils.ixx">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h" />
     <ClInclude Include="Source\CLRMain.h">
       <Filter>Source</Filter>
     </ClInclude>
@@ -30,10 +37,10 @@
     <ClInclude Include="Source\Vector.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Utils.h">
+    <ClInclude Include="Source\Types.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Types.h">
+    <ClInclude Include="Source\Headers.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>

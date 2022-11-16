@@ -1,11 +1,10 @@
-#include "pch.h"
-
-#include <Utils.h>
+module Utils;
 
 import std.core;
 
 namespace CLR
 {
+    // std::cerr is not buffered
     template<bool USE_FILE>
     void LOG_ERROR(const char* error)
     {

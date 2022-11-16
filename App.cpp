@@ -1,6 +1,8 @@
-#include "pch.h"
+#include <Headers.h>
 
 #include <CLRMain.h>
+
+import Utils;
 
 using namespace winrt::Windows;
 using namespace winrt::Windows::ApplicationModel::Core;
@@ -11,6 +13,7 @@ using namespace winrt::Windows::UI::Input;
 
 using namespace winrt::Windows::ApplicationModel;
 using namespace winrt::Windows::ApplicationModel::Activation;
+using namespace winrt::Windows::Graphics::Display;
 
 using namespace CLR;
 
@@ -32,21 +35,8 @@ struct App : winrt::implements<App, IFrameworkViewSource, IFrameworkView>
         if (main == nullptr)
         {
             main = winrt::make_self<CLRMain>();
+            main->Init();
         }
-    }
-
-    void Load(winrt::hstring const& /* entryPoint */)
-    {
-        main->Load();
-    }
-
-    void Uninitialize()
-    {
-    }
-
-    void Run()
-    {
-        main->Run();
     }
 
     void SetWindow(CoreWindow const& window)
@@ -56,7 +46,44 @@ struct App : winrt::implements<App, IFrameworkViewSource, IFrameworkView>
         PointerVisualizationSettings visualizationSettings{ PointerVisualizationSettings::GetForCurrentView() };
         visualizationSettings.IsContactFeedbackEnabled(false);
         visualizationSettings.IsBarrelButtonFeedbackEnabled(false);
+
+        //window.Activated({ this, &App::OnWindowActivationChanged });
+
+        //window.SizeChanged({ this, &App::OnWindowSizeChanged });
+
+        //window.Closed({ this, &App::OnWindowClosed });
+
+        //window.VisibilityChanged({ this, &App::OnVisibilityChanged });
+
+        //DisplayInformation currentDisplayInformation{ DisplayInformation::GetForCurrentView() };
+
+        //currentDisplayInformation.DpiChanged({ this, &App::OnDpiChanged });
+
+        //currentDisplayInformation.OrientationChanged({ this, &App::OnOrientationChanged });
+
+        //currentDisplayInformation.StereoEnabledChanged({ this, &App::OnStereoEnabledChanged });
+
+        //DisplayInformation::DisplayContentsInvalidated({ this, &App::OnDisplayContentsInvalidated });
+
+        main->SetWindow(window);
     }
+
+    void Load(winrt::hstring const& /* entryPoint */)
+    {
+        main->Load();
+    }
+
+    void Run()
+    {
+        main->Run();
+    }
+
+    void Uninitialize()
+    {
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Callback fuctions
 
     void OnActivated(CoreApplicationView const& /* applicationView */, IActivatedEventArgs const& /* args */)
     {

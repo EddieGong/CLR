@@ -1,8 +1,9 @@
-#include "pch.h"
+
 #include "CppUnitTest.h"
 
-#include <Utils.h>
 #include <Vector.h>
+
+import Utils;
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
