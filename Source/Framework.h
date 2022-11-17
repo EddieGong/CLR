@@ -6,11 +6,11 @@ import Utils;
 
 namespace CLR
 {
-    class CLRMain : public winrt::implements<CLRMain, winrt::Windows::Foundation::IInspectable>
+    class Framework : public winrt::implements<Framework, winrt::Windows::Foundation::IInspectable>
     {
     public:
-        CLRMain() = default;
-        ~CLRMain() = default;
+        Framework() = default;
+        ~Framework() = default;
 
         void SetWindow(winrt::Windows::UI::Core::CoreWindow const& window) { UNUSED_PARAMS(window); }
 

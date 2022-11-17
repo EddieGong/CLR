@@ -1,6 +1,4 @@
-#include <Headers.h>
-
-#include <CLRMain.h>
+#include <Framework.h>
 
 import Utils;
 
@@ -29,53 +27,44 @@ struct App : winrt::implements<App, IFrameworkViewSource, IFrameworkView>
         applicationView.Activated({ this, &App::OnActivated });
 
         CoreApplication::Suspending({ this, &App::OnSuspending });
+        CoreApplication::Resuming  ({ this, &App::OnResuming });
 
-        CoreApplication::Resuming({ this, &App::OnResuming });
-
-        if (main == nullptr)
+        if (framework == nullptr)
         {
-            main = winrt::make_self<CLRMain>();
-            main->Init();
+            framework = winrt::make_self<Framework>();
+            framework->Init();
         }
     }
 
     void SetWindow(CoreWindow const& window)
     {
         window.PointerCursor(CoreCursor(CoreCursorType::Arrow, 0));
+        window.Activated        ({ this, &App::OnWindowActivationChanged });
+        window.SizeChanged      ({ this, &App::OnWindowSizeChanged });
+        window.Closed           ({ this, &App::OnWindowClosed });
+        window.VisibilityChanged({ this, &App::OnVisibilityChanged });
+
+        DisplayInformation currentDisplayInformation{ DisplayInformation::GetForCurrentView() };
+        currentDisplayInformation.DpiChanged          ({ this, &App::OnDpiChanged });
+        currentDisplayInformation.OrientationChanged  ({ this, &App::OnOrientationChanged });
+        currentDisplayInformation.StereoEnabledChanged({ this, &App::OnStereoEnabledChanged });
+        DisplayInformation::DisplayContentsInvalidated({ this, &App::OnDisplayContentsInvalidated });
 
         PointerVisualizationSettings visualizationSettings{ PointerVisualizationSettings::GetForCurrentView() };
         visualizationSettings.IsContactFeedbackEnabled(false);
         visualizationSettings.IsBarrelButtonFeedbackEnabled(false);
 
-        //window.Activated({ this, &App::OnWindowActivationChanged });
-
-        //window.SizeChanged({ this, &App::OnWindowSizeChanged });
-
-        //window.Closed({ this, &App::OnWindowClosed });
-
-        //window.VisibilityChanged({ this, &App::OnVisibilityChanged });
-
-        //DisplayInformation currentDisplayInformation{ DisplayInformation::GetForCurrentView() };
-
-        //currentDisplayInformation.DpiChanged({ this, &App::OnDpiChanged });
-
-        //currentDisplayInformation.OrientationChanged({ this, &App::OnOrientationChanged });
-
-        //currentDisplayInformation.StereoEnabledChanged({ this, &App::OnStereoEnabledChanged });
-
-        //DisplayInformation::DisplayContentsInvalidated({ this, &App::OnDisplayContentsInvalidated });
-
-        main->SetWindow(window);
+        framework->SetWindow(window);
     }
 
     void Load(winrt::hstring const& /* entryPoint */)
     {
-        main->Load();
+        framework->Load();
     }
 
     void Run()
     {
-        main->Run();
+        framework->Run();
     }
 
     void Uninitialize()
@@ -118,8 +107,52 @@ struct App : winrt::implements<App, IFrameworkViewSource, IFrameworkView>
         //m_main->Resume();
     }
 
+    void OnWindowClosed(CoreWindow const& /* sender */, CoreWindowEventArgs const& /* args */)
+    {
+        //m_main->Close();
+    }
+
+    void OnWindowActivationChanged(CoreWindow const& /* sender */, WindowActivatedEventArgs const& /*args*/)
+    {
+        //m_main->WindowActivationChanged(args.WindowActivationState());
+    }
+
+    void OnWindowSizeChanged(CoreWindow const& /* window */, WindowSizeChangedEventArgs const& /*args*/)
+    {
+        //m_deviceResources->SetLogicalSize(args.Size());
+        //m_main->CreateWindowSizeDependentResources();
+    }
+
+    void OnVisibilityChanged(CoreWindow const& /* sender */, VisibilityChangedEventArgs const& /*args*/)
+    {
+        //m_main->Visibility(args.Visible());
+    }
+
+    void OnDpiChanged(DisplayInformation const& /*sender*/, IInspectable const& /* args */)
+    {
+        //m_deviceResources->SetDpi(sender.LogicalDpi());
+        //m_main->CreateWindowSizeDependentResources();
+    }
+
+    void OnOrientationChanged(DisplayInformation const& /*sender*/, IInspectable const& /* args */)
+    {
+        //m_deviceResources->SetCurrentOrientation(sender.CurrentOrientation());
+        //m_main->CreateWindowSizeDependentResources();
+    }
+
+    void OnStereoEnabledChanged(DisplayInformation const& /* sender */, IInspectable const& /* args */)
+    {
+        //m_deviceResources->UpdateStereoState();
+        //m_main->CreateWindowSizeDependentResources();
+    }
+
+    void OnDisplayContentsInvalidated(DisplayInformation const& /* sender */, IInspectable const& /* args */)
+    {
+        //m_deviceResources->ValidateDevice();
+    }
+
 private:
-    winrt::com_ptr<CLRMain> main;
+    winrt::com_ptr<Framework> framework;
 };
 
 int __stdcall wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)

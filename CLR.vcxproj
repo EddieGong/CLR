@@ -121,7 +121,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Source\CLRMain.h" />
+    <ClInclude Include="Source\Framework.h" />
     <ClInclude Include="Source\GraphicsCore.h" />
     <ClInclude Include="Source\Headers.h" />
     <ClInclude Include="Source\Renderer.h" />
@@ -144,7 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="Source\CLRMain.cpp" />
+    <ClCompile Include="Source\Framework.cpp" />
     <ClCompile Include="Source\GraphicsCore.cpp" />
     <ClCompile Include="Source\Level.cpp" />
     <ClCompile Include="Source\Level.ixx" />

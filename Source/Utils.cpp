@@ -1,6 +1,6 @@
-module Utils;
+#pragma warning(disable : 5050)
 
-import std.core;
+module Utils;
 
 namespace CLR
 {

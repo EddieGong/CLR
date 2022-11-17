@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="Source\CLRMain.cpp">
+    <ClCompile Include="Source\Framework.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\Renderer.cpp">
@@ -25,7 +25,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\CLRMain.h">
+    <ClInclude Include="Source\Framework.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\Renderer.h">

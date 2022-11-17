@@ -1,13 +1,12 @@
-#include <CLRMain.h>
+#include <Framework.h>
 
 import Utils;
-import Module;
 
 using namespace winrt::Windows::UI::Core;
 
 namespace CLR
 {
-    void CLRMain::Run() 
+    void Framework::Run()
     {
         while (!windowClosed)
         {
