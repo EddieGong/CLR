@@ -2,15 +2,11 @@
 
 import Utils;
 
-using namespace winrt::Windows;
+using namespace winrt::Windows::ApplicationModel;
 using namespace winrt::Windows::ApplicationModel::Core;
-using namespace winrt::Windows::Foundation::Numerics;
-using namespace winrt::Windows::UI;
+using namespace winrt::Windows::ApplicationModel::Activation;
 using namespace winrt::Windows::UI::Core;
 using namespace winrt::Windows::UI::Input;
-
-using namespace winrt::Windows::ApplicationModel;
-using namespace winrt::Windows::ApplicationModel::Activation;
 using namespace winrt::Windows::Graphics::Display;
 
 using namespace CLR;
