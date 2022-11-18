@@ -3,9 +3,15 @@
 export module Utils;
 
 import std.core;
+import <cassert>;
 
 namespace CLR
 {
+    export void ASSERT(bool exp, char const* msg) 
+    { 
+        assert(((void)msg, exp)); 
+    }
+
     export template<typename... Args>
     void UNUSED_PARAMS(const Args& ...arg)
     {

@@ -14,19 +14,19 @@ namespace CLR
 
     void Framework::Init()
     {
-        renderer = std::make_unique<Renderer>();
+        m_Renderer = std::make_unique<Renderer>();
     }
 
     void Framework::Close()
     {
-        renderer.reset();
+        m_Renderer.reset();
     }
 
     void Framework::Run()
     {
-        while (!windowClosed)
+        while (!m_WindowClosed)
         {
-            if (visible)
+            if (m_Visible)
             {
                 CoreWindow::GetForCurrentThread().Dispatcher().ProcessEvents(CoreProcessEventsOption::ProcessAllIfPresent);
                 //Update();

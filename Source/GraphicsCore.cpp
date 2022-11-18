@@ -7,7 +7,7 @@ import GraphicsDX12;
 
 namespace CLR::Graphics
 {
-    HDevice CreateDevice(const DeviceCreateParameters& createParams)
+    HDevice CreateDevice(const DeviceCreateParameters& /*createParams*/)
     {
         return HDevice();
     }

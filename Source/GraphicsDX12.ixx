@@ -22,7 +22,7 @@ namespace CLR::Graphics
         ID3D12Device* device;
     };
 
-    HDevice CreateDevice(const DeviceCreateParameters& createParams)
+    HDevice CreateDevice(const DeviceCreateParameters& /*createParams*/)
     {
 //        uint32_t dxgiFactoryFlags = 0;
 //

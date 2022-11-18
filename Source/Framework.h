@@ -4,18 +4,20 @@
 
 import Utils;
 
+using namespace winrt;
+
 namespace CLR
 {
     class Renderer;
 
-    class Framework : public winrt::implements<Framework, winrt::Windows::Foundation::IInspectable>
+    class Framework : public implements<Framework, Windows::Foundation::IInspectable>
     {
     public:
         // TONOTE: Can't use "= defualt" because of unique_ptr
         Framework();
         ~Framework();
 
-        void SetWindow(winrt::Windows::UI::Core::CoreWindow const& window) { UNUSED_PARAMS(window); }
+        void SetWindow(Windows::UI::Core::CoreWindow const& window) { UNUSED_PARAMS(window); }
 
         void Init();
         void Load()     {}
@@ -24,10 +26,13 @@ namespace CLR
         void Resume()   {}
         void Close();
 
-    private:
-        bool windowClosed {false};
-        bool visible      {false};
+        void SetVisibility(bool /*visible*/) {}
+        void WindowActivationChanged(Windows::UI::Core::CoreWindowActivationState /*state*/) {}
 
-        std::unique_ptr<Renderer> renderer;
+    private:
+        bool m_WindowClosed {false};
+        bool m_Visible      {false};
+
+        std::unique_ptr<Renderer> m_Renderer;
     };
 }
