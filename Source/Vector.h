@@ -1,6 +1,7 @@
 #pragma once
 
-#include <Types.h>
+#include <array>
+#include <BasicTypes.h>
 
 namespace CLR::Math
 {

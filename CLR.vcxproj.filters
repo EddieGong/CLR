@@ -40,7 +40,7 @@
     <ClInclude Include="Source\Vector.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Types.h">
+    <ClInclude Include="Source\BasicTypes.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\Headers.h">

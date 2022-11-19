@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Headers.h>
+#include <BasicTypes.h>
 
 import Utils;
 
@@ -26,8 +27,11 @@ namespace CLR
         void Resume()   {}
         void Close();
 
-        void SetVisibility(bool /*visible*/) {}
+        void Visibility(bool /*visible*/) {}
         void WindowActivationChanged(Windows::UI::Core::CoreWindowActivationState /*state*/) {}
+        void WindowSizeChanged(Size const& /*size*/) {}
+        void DpiChanged(float /*dpi*/) {}
+        void ValidateGraphicsDevice() {}
 
     private:
         bool m_WindowClosed {false};

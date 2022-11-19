@@ -125,7 +125,7 @@
     <ClInclude Include="Source\GraphicsTypes.h" />
     <ClInclude Include="Source\Headers.h" />
     <ClInclude Include="Source\Renderer.h" />
-    <ClInclude Include="Source\Types.h" />
+    <ClInclude Include="Source\BasicTypes.h" />
     <ClInclude Include="Source\Vector.h" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <array>
-
 namespace CLR
 {
 	using uint8  = unsigned char;
@@ -17,4 +15,20 @@ namespace CLR
 	static_assert(sizeof(int16)  == 2);
 	static_assert(sizeof(uint32) == 4);
 	static_assert(sizeof(int32)  == 4);
+
+	struct Size
+	{
+		Size() noexcept = default;
+		constexpr Size(float width, float height) noexcept
+			: Width(width), Height(height)
+		{}
+
+		float Width  {0.f};
+		float Height {0.f};
+	};
+
+	constexpr bool operator==(Size const& left, Size const& right) noexcept
+	{
+		return left.Width == right.Width && left.Height == right.Height;
+	}
 }

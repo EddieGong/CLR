@@ -9,8 +9,6 @@ using namespace winrt::Windows::UI::Core;
 using namespace winrt::Windows::UI::Input;
 using namespace winrt::Windows::Graphics::Display;
 
-using namespace CLR;
-
 struct App : winrt::implements<App, IFrameworkViewSource, IFrameworkView>
 {
     IFrameworkView CreateView()
@@ -27,7 +25,7 @@ struct App : winrt::implements<App, IFrameworkViewSource, IFrameworkView>
 
         if (framework == nullptr)
         {
-            framework = winrt::make_self<Framework>();
+            framework = winrt::make_self<CLR::Framework>();
             framework->Init();
         }
     }
@@ -65,6 +63,7 @@ struct App : winrt::implements<App, IFrameworkViewSource, IFrameworkView>
 
     void Uninitialize()
     {
+        CLR::ASSERT(false, "Uninitialize is NOT supported");
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,8 +71,7 @@ struct App : winrt::implements<App, IFrameworkViewSource, IFrameworkView>
 
     void OnActivated(CoreApplicationView const& /* applicationView */, IActivatedEventArgs const& /* args */)
     {
-        CoreWindow window = CoreWindow::GetForCurrentThread();
-        window.Activate();
+        CoreWindow::GetForCurrentThread().Activate();
     }
 
     winrt::fire_and_forget OnSuspending(IInspectable const& /* sender */, SuspendingEventArgs const& args)
@@ -111,41 +109,38 @@ struct App : winrt::implements<App, IFrameworkViewSource, IFrameworkView>
         framework->WindowActivationChanged(args.WindowActivationState());
     }
 
-    void OnWindowSizeChanged(CoreWindow const& /* window */, WindowSizeChangedEventArgs const& /*args*/)
+    void OnWindowSizeChanged(CoreWindow const& /* window */, WindowSizeChangedEventArgs const& args)
     {
-        //m_deviceResources->SetLogicalSize(args.Size());
-        //m_main->CreateWindowSizeDependentResources();
+        framework->WindowSizeChanged(CLR::Size(args.Size().Width, args.Size().Height));
     }
 
     void OnVisibilityChanged(CoreWindow const& /* sender */, VisibilityChangedEventArgs const& args)
     {
-        framework->SetVisibility(args.Visible());
+        framework->Visibility(args.Visible());
     }
 
-    void OnDpiChanged(DisplayInformation const& /*sender*/, IInspectable const& /* args */)
+    void OnDpiChanged(DisplayInformation const& sender, IInspectable const& /*args*/)
     {
-        //m_deviceResources->SetDpi(sender.LogicalDpi());
-        //m_main->CreateWindowSizeDependentResources();
+        framework->DpiChanged(sender.LogicalDpi());
     }
 
     void OnOrientationChanged(DisplayInformation const& /*sender*/, IInspectable const& /* args */)
     {
-        //m_deviceResources->SetCurrentOrientation(sender.CurrentOrientation());
-        //m_main->CreateWindowSizeDependentResources();
+        CLR::ASSERT(false, "OnOrientationChanged is NOT Supported");
     }
 
     void OnStereoEnabledChanged(DisplayInformation const& /* sender */, IInspectable const& /* args */)
     {
-        ASSERT(false, "NOT Supported");
+        CLR::ASSERT(false, "OnStereoEnabledChanged is NOT Supported");
     }
 
     void OnDisplayContentsInvalidated(DisplayInformation const& /* sender */, IInspectable const& /* args */)
     {
-        //m_deviceResources->ValidateDevice();
+        framework->ValidateGraphicsDevice();
     }
 
 private:
-    winrt::com_ptr<Framework> framework;
+    winrt::com_ptr<CLR::Framework> framework;
 };
 
 int __stdcall wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
