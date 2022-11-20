@@ -31,10 +31,13 @@ namespace CLR
     //class HrException : public std::runtime_error
     //{
     //public:
-    //    HrException(HRESULT hr) : std::runtime_error(HrToString(hr)), m_hr(hr) {}
-    //    HRESULT Error() const { return m_hr; }
+    //    HrException(HRESULT hr) : 
+    //        std::runtime_error(HrToString(hr)), m_hr(hr) 
+    //    {}
+    //    HRESULT Error() const { return mHResult; }
+
     //private:
-    //    const HRESULT m_hr;
+    //    const HRESULT mHResult;
     //};
 
 

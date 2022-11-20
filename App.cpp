@@ -1,3 +1,7 @@
+#ifndef WINRT_LEAN_AND_MEAN
+#define WINRT_LEAN_AND_MEAN
+#endif
+
 #include <Framework.h>
 
 import Utils;
@@ -48,7 +52,7 @@ struct App : winrt::implements<App, IFrameworkViewSource, IFrameworkView>
         visualizationSettings.IsContactFeedbackEnabled(false);
         visualizationSettings.IsBarrelButtonFeedbackEnabled(false);
 
-        framework->SetWindow(window);
+        framework->SetWindow(CLR::Size(window.Bounds().Width, window.Bounds().Height));
     }
 
     void Load(winrt::hstring const& /* entryPoint */)

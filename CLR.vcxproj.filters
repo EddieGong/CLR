@@ -23,7 +23,7 @@
     <ClCompile Include="Source\Utils.ixx">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GraphicsDX12.ixx">
+    <ClCompile Include="Source\GraphicsDX12.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,6 +47,9 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\GraphicsTypes.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GraphicsDX12.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>

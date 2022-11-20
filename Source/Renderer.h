@@ -1,5 +1,6 @@
 #pragma once
 
+#include <BasicTypes.h>
 #include <GraphicsTypes.h>
 
 namespace CLR
@@ -11,9 +12,18 @@ namespace CLR
         Renderer();
         ~Renderer();
 
-        void Create();
+        void Init();
 
     private:
-        Graphics::HDevice device { nullptr };
+        void CreateDeviceIndependentResources();
+        void CreateDeviceResources();
+
+    private:
+        Graphics::HDevice mDevice { nullptr };
+
+        // Display device resolution
+        Size mDisplaySize;
+        // Max scaled render target resolution
+        Size mRenderTargetSize;
     };
 }

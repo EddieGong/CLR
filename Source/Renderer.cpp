@@ -7,14 +7,25 @@
 namespace CLR
 {
     Renderer::Renderer()
-    {
-    }
+    {}
     Renderer::~Renderer()
     {}
 
-    void Renderer::Create()
+    void Renderer::Init()
+    {
+        CreateDeviceIndependentResources();
+        CreateDeviceResources();
+    }
+
+    void Renderer::CreateDeviceIndependentResources()
+    {
+        // Direct2D, DirectWrite
+    }
+
+    void Renderer::CreateDeviceResources()
     {
         Graphics::DeviceCreateParameters param;
-        device = Graphics::CreateDevice(param);
+        mDevice = Graphics::CreateDevice(param);
+
     }
 }

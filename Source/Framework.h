@@ -18,7 +18,7 @@ namespace CLR
         Framework();
         ~Framework();
 
-        void SetWindow(Windows::UI::Core::CoreWindow const& window) { UNUSED_PARAMS(window); }
+        void SetWindow(Size const& windowSize);
 
         void Init();
         void Load()     {}

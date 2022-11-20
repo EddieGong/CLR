@@ -106,7 +106,7 @@
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5105</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">d3d12.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
@@ -122,6 +122,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Framework.h" />
     <ClInclude Include="Source\GraphicsCore.h" />
+    <ClInclude Include="Source\GraphicsDX12.h" />
     <ClInclude Include="Source\GraphicsTypes.h" />
     <ClInclude Include="Source\Headers.h" />
     <ClInclude Include="Source\Renderer.h" />
@@ -146,7 +147,7 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Source\Framework.cpp" />
     <ClCompile Include="Source\GraphicsCore.cpp" />
-    <ClCompile Include="Source\GraphicsDX12.ixx" />
+    <ClCompile Include="Source\GraphicsDX12.cpp" />
     <ClCompile Include="Source\Level.cpp" />
     <ClCompile Include="Source\Level.ixx" />
     <ClCompile Include="Source\Renderer.cpp" />

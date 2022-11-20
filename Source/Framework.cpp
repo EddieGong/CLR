@@ -15,6 +15,7 @@ namespace CLR
     void Framework::Init()
     {
         m_Renderer = std::make_unique<Renderer>();
+        m_Renderer->Init();
     }
 
     void Framework::Close()
@@ -38,5 +39,10 @@ namespace CLR
                 CoreWindow::GetForCurrentThread().Dispatcher().ProcessEvents(CoreProcessEventsOption::ProcessOneAndAllPending);
             }
         }
+    }
+
+    void Framework::SetWindow(Size const& /*windowSize*/)
+    {
+    
     }
 }
