@@ -15,7 +15,6 @@ namespace CLR
     void Framework::Init()
     {
         m_Renderer = std::make_unique<Renderer>();
-        m_Renderer->Init();
     }
 
     void Framework::Close()
@@ -44,5 +43,10 @@ namespace CLR
     void Framework::SetWindow(Size const& /*windowSize*/)
     {
     
+    }
+
+    void Framework::Suspend()
+    {
+        m_Renderer.reset();
     }
 }

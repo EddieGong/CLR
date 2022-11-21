@@ -7,14 +7,13 @@
 namespace CLR
 {
     Renderer::Renderer()
-    {}
-    Renderer::~Renderer()
-    {}
-
-    void Renderer::Init()
     {
         CreateDeviceIndependentResources();
         CreateDeviceResources();
+    }
+    Renderer::~Renderer()
+    {
+        Graphics::DestroyDevice(mDevice);
     }
 
     void Renderer::CreateDeviceIndependentResources()
@@ -26,6 +25,5 @@ namespace CLR
     {
         Graphics::DeviceCreateParameters param;
         mDevice = Graphics::CreateDevice(param);
-
     }
 }

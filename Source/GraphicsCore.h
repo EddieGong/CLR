@@ -9,4 +9,5 @@
 namespace CLR::Graphics
 {
     HDevice CreateDevice(const DeviceCreateParameters& createParams);
+    void DestroyDevice(HDevice device);
 }

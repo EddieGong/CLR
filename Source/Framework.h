@@ -23,7 +23,7 @@ namespace CLR
         void Init();
         void Load()     {}
         void Run();
-        void Suspend()  {}
+        void Suspend();
         void Resume()   {}
         void Close();
 

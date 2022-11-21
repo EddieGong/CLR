@@ -26,6 +26,9 @@
     <ClCompile Include="Source\GraphicsDX12.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="CommandLineArg.ixx">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework.h">

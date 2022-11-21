@@ -8,11 +8,8 @@ namespace CLR
     class Renderer
     {
     public:
-
         Renderer();
         ~Renderer();
-
-        void Init();
 
     private:
         void CreateDeviceIndependentResources();
