@@ -1,39 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Common">
-      <UniqueIdentifier>2b02e96c-5b78-420d-99de-c19ad9b338f8</UniqueIdentifier>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{90efda66-031d-40a9-a1e4-1be97ec961c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{ddfc66a0-5bd3-4e69-a374-3fe4da6f8741}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Headers.h" />
-    <ClInclude Include="StepTimer.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h" />
     <ClInclude Include="DeviceResources.h">
-      <Filter>Common</Filter>
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="StepTimer.h">
+      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="d3dx12.h">
-      <Filter>Common</Filter>
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Game.cpp" />
     <ClCompile Include="DeviceResources.cpp">
-      <Filter>Common</Filter>
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="GraphicsLogo.png" />
-    <CopyFileToFolders Include="LargeLogo.png" />
-    <CopyFileToFolders Include="SmallLogo.png" />
-    <CopyFileToFolders Include="SplashScreen.png" />
-    <CopyFileToFolders Include="StoreLogo.png" />
+    <CopyFileToFolders Include="GraphicsLogo.png">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="LargeLogo.png">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="SmallLogo.png">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="SplashScreen.png">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="StoreLogo.png">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
