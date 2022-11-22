@@ -24,6 +24,12 @@
     <ClInclude Include="Game.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Vector.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\BasicTypes.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
