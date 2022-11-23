@@ -7,6 +7,9 @@
 #include "DeviceResources.h"
 #include "StepTimer.h"
 
+#include "BasicTypes.h"
+
+import Settings;
 
 // A basic game implementation that creates a D3D12 device and
 // provides a game loop.
@@ -60,4 +63,6 @@ private:
 
     // Rendering loop timer.
     DX::StepTimer                           m_timer;
+
+    CLR::DisplaySettings                    mDisplaySettings;
 };

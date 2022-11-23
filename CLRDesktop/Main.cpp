@@ -28,7 +28,7 @@ namespace
     std::unique_ptr<Game> g_game;
 }
 
-LPCWSTR g_szAppName = L"CLRDesktop";
+LPCWSTR g_szAppName = L"CLR Win64";
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 void ExitGame() noexcept;
@@ -51,7 +51,6 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
             std::ignore = MessageBoxW(nullptr, L"Game Runtime is not installed on this system or needs updating.", g_szAppName, MB_ICONERROR | MB_OK);
         }
         return 1;
-
     }
 
     g_game = std::make_unique<Game>();
@@ -60,15 +59,15 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     {
         // Register class
         WNDCLASSEXW wcex = {};
-        wcex.cbSize = sizeof(WNDCLASSEXW);
-        wcex.style = CS_HREDRAW | CS_VREDRAW;
-        wcex.lpfnWndProc = WndProc;
-        wcex.hInstance = hInstance;
-        wcex.hIcon = LoadIconW(hInstance, L"IDI_ICON");
-        wcex.hCursor = LoadCursorW(nullptr, IDC_ARROW);
-        wcex.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
-        wcex.lpszClassName = L"CLRDesktopWindowClass";
-        wcex.hIconSm = LoadIconW(wcex.hInstance, L"IDI_ICON");
+        wcex.cbSize         = sizeof(WNDCLASSEXW);
+        wcex.style          = CS_HREDRAW | CS_VREDRAW;
+        wcex.lpfnWndProc    = WndProc;
+        wcex.hInstance      = hInstance;
+        wcex.hIcon          = LoadIconW(hInstance, L"IDI_ICON");
+        wcex.hCursor        = LoadCursorW(nullptr, IDC_ARROW);
+        wcex.hbrBackground  = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
+        wcex.lpszClassName  = L"CLRDesktopWindowClass";
+        wcex.hIconSm        = LoadIconW(wcex.hInstance, L"IDI_ICON");
         if (!RegisterClassExW(&wcex))
             return 1;
 

@@ -1,7 +1,8 @@
 #pragma once
 
-#include <array>
 #include <BasicTypes.h>
+
+import <array>;
 
 namespace CLR::Math
 {
@@ -28,13 +29,13 @@ namespace CLR::Math
         template<typename... Ts>
         Vector(T v0, Ts... args)
         {
-            this->v = {v0, args...};
+            this->mV = {v0, args...};
         }
 
-        inline T operator[](const uint32 index) const { return v.at(index); }
+        inline T operator[](const uint32 index) const { return mV.at(index); }
 
     private:
-        std::array<T, N> v;
+        std::array<T, N> mV;
     };
 
     using Vector2f = Vector<float, 2>;

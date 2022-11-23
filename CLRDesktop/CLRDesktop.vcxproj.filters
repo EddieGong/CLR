@@ -18,9 +18,6 @@
     <ClInclude Include="d3dx12.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Headers.h">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Source</Filter>
     </ClInclude>
@@ -30,6 +27,18 @@
     <ClInclude Include="..\Source\BasicTypes.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\GraphicsTypes.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GraphicsDX12.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GraphicsCore.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -37,6 +46,21 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GraphicsCore.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GraphicsDX12.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Settings.ixx">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Utils.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Utils.ixx">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

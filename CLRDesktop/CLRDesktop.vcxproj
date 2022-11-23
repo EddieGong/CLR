@@ -96,6 +96,7 @@
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <EnableModules>true</EnableModules>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\Source\</AdditionalIncludeDirectories>
     </ClCompile>
     <FXCompile>
       <ShaderModel>6.0</ShaderModel>
@@ -126,6 +127,7 @@
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <EnableModules>true</EnableModules>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\Source\</AdditionalIncludeDirectories>
     </ClCompile>
     <FXCompile>
       <ShaderModel>6.0</ShaderModel>
@@ -153,6 +155,8 @@
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <EnableModules>true</EnableModules>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\Source\</AdditionalIncludeDirectories>
+      <SDLCheck>true</SDLCheck>
     </ClCompile>
     <FXCompile>
       <ShaderModel>6.0</ShaderModel>
@@ -162,14 +166,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\BasicTypes.h" />
+    <ClInclude Include="..\Source\GraphicsCore.h" />
+    <ClInclude Include="..\Source\GraphicsDX12.h" />
+    <ClInclude Include="..\Source\GraphicsTypes.h" />
     <ClInclude Include="..\Source\Vector.h" />
     <ClInclude Include="d3dx12.h" />
     <ClInclude Include="DeviceResources.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="StepTimer.h" />
     <ClInclude Include="Headers.h" />
+    <ClInclude Include="StepTimer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\GraphicsCore.cpp" />
+    <ClCompile Include="..\Source\GraphicsDX12.cpp" />
+    <ClCompile Include="..\Source\Settings.ixx" />
+    <ClCompile Include="..\Source\Utils.cpp" />
+    <ClCompile Include="..\Source\Utils.ixx" />
     <ClCompile Include="DeviceResources.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp">
@@ -203,6 +215,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharedSTLHeaderUnits\SharedSTLHeaderUnits.vcxproj">
+      <Project>{61cd105c-a6e3-4a46-b58e-cc5feca478c7}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,9 +1,5 @@
 #pragma once
 
-//#include <Headers.h>
-
-//using winrt::com_ptr;
-
 namespace CLR::Graphics
 {
     struct Device;

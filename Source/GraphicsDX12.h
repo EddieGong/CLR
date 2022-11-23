@@ -1,11 +1,9 @@
 #pragma once
 
-#include <winrt/base.h>
-
 // From Agility SDK
 #include <d3d12.h>
 
-#include <dxgi1_6.h>
+#include "GraphicsTypes.h"
 
 namespace CLR::Graphics
 {

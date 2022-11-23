@@ -26,6 +26,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharedSTLHeaderUnits\SharedSTLHeaderUnits.vcxproj">
+      <Project>{61cd105c-a6e3-4a46-b58e-cc5feca478c7}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <ProjectGuid>{F1E6C7A2-4E88-4B4E-997D-5DA9E8A24F2A}</ProjectGuid>

@@ -4,10 +4,10 @@
 #define CLR_DX12    1
 #endif
 
-#include <GraphicsTypes.h>
+#include "GraphicsTypes.h"
 
 namespace CLR::Graphics
 {
-    HDevice CreateDevice(const DeviceCreateParameters& createParams);
+    HDevice CreateDevice(DeviceCreateParameters const& createParams);
     void DestroyDevice(HDevice device);
 }
