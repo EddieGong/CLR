@@ -4,8 +4,19 @@ export module Settings;
 
 namespace CLR
 {
-    export struct DisplaySettings
+    export class DisplaySettings
     {
-        Size mResolution;
+    public:
+        DisplaySettings() = default;
+
+        float GetWidth() const  { return mResolution.Width; }
+        float GetHeight() const { return mResolution.Height; }
+
+        bool IsFullScreen() const { return mFullScreen; }
+
+    private:
+        Size mResolution{ 2560.f, 1440.f };
+
+        bool mFullScreen{ true };
     };
 }

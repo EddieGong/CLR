@@ -19,6 +19,8 @@ Game::Game() noexcept(false)
     //   Add DX::DeviceResources::c_EnableHDR for HDR10 display.
     //   Add DX::DeviceResources::c_ReverseDepth to optimize depth buffer clears for 0 instead of 1.
     m_deviceResources->RegisterDeviceNotify(this);
+
+    // TODO: fetch the screen resolution
 }
 
 Game::~Game()
@@ -174,8 +176,8 @@ void Game::OnWindowSizeChanged(int width, int height)
 void Game::GetDefaultSize(int& width, int& height) const noexcept
 {
     // TODO: Change to desired default window size (note minimum size is 320x200).
-    width = 800;
-    height = 600;
+    width  = int(mDisplaySettings.GetWidth());
+    height = int(mDisplaySettings.GetHeight());
 }
 #pragma endregion
 

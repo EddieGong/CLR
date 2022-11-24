@@ -48,6 +48,8 @@ public:
     // Properties
     void GetDefaultSize( int& width, int& height ) const noexcept;
 
+    CLR::DisplaySettings const& DisplaySetting() const { return mDisplaySettings; }
+
 private:
 
     void Update(DX::StepTimer const& timer);

@@ -79,17 +79,16 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
         AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
-        HWND hwnd = CreateWindowExW(0, L"CLRDesktopWindowClass", g_szAppName, WS_OVERLAPPEDWINDOW,
+        const bool isFullScreen = g_game->DisplaySetting().IsFullScreen();
+
+        HWND hwnd = CreateWindowExW(isFullScreen ? WS_EX_TOPMOST : 0, L"CLRDesktopWindowClass", g_szAppName, isFullScreen ? WS_POPUP : WS_OVERLAPPEDWINDOW,
             CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
             nullptr);
-        // TODO: Change to CreateWindowExW(WS_EX_TOPMOST, L"CLRDesktopWindowClass", g_szAppName, WS_POPUP,
-        // to default to fullscreen.
 
         if (!hwnd)
             return 1;
 
-        ShowWindow(hwnd, nCmdShow);
-        // TODO: Change nCmdShow to SW_SHOWMAXIMIZED to default to fullscreen.
+        ShowWindow(hwnd, isFullScreen ? SW_SHOWMAXIMIZED : nCmdShow);
 
         SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(g_game.get()));
 
