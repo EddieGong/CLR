@@ -17,6 +17,6 @@ namespace CLR
     private:
         Size mResolution{ 2560.f, 1440.f };
 
-        bool mFullScreen{ true };
+        bool mFullScreen{ false };
     };
 }
