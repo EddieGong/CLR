@@ -5,6 +5,8 @@
 #include "Headers.h"
 #include "Game.h"
 
+import Utils;
+
 using namespace DirectX;
 
 #ifdef __clang__
@@ -36,8 +38,7 @@ void ExitGame() noexcept;
 // Entry point
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
-    UNREFERENCED_PARAMETER(hPrevInstance);
-    UNREFERENCED_PARAMETER(lpCmdLine);
+    CLR::UNUSED_PARAMS(hPrevInstance, lpCmdLine);
 
     if (!XMVerifyCPUSupport())
         return 1;
@@ -129,6 +130,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     // TODO: Set s_fullscreen to true if defaulting to fullscreen.
 
     auto game = reinterpret_cast<Game*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+    if (game)
+    {
+        s_fullscreen = game->DisplaySetting().IsFullScreen();
+    }
 
     switch (message)
     {
@@ -260,7 +265,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     game->GetDefaultSize(width, height);
 
                 ShowWindow(hWnd, SW_SHOWNORMAL);
-
                 SetWindowPos(hWnd, HWND_TOP, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER | SWP_FRAMECHANGED);
             }
             else
@@ -268,12 +272,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 SetWindowLongPtr(hWnd, GWL_STYLE, WS_POPUP);
                 SetWindowLongPtr(hWnd, GWL_EXSTYLE, WS_EX_TOPMOST);
 
-                SetWindowPos(hWnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
-
                 ShowWindow(hWnd, SW_SHOWMAXIMIZED);
+                SetWindowPos(hWnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
             }
 
             s_fullscreen = !s_fullscreen;
+            if (game)
+            {   
+                // TODO: The design maybe is too simple. Display setting is not a const reference
+                game->DisplaySetting().SetFullScreen(s_fullscreen);
+            }
         }
         break;
 

@@ -48,7 +48,7 @@ public:
     // Properties
     void GetDefaultSize( int& width, int& height ) const noexcept;
 
-    CLR::DisplaySettings const& DisplaySetting() const { return mDisplaySettings; }
+    CLR::DisplaySettings& DisplaySetting() { return mDisplaySettings; }
 
 private:
 

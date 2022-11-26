@@ -9,14 +9,15 @@ namespace CLR
     public:
         DisplaySettings() = default;
 
-        float GetWidth() const  { return mResolution.Width; }
-        float GetHeight() const { return mResolution.Height; }
+        float GetWidth() const              { return mResolution.Width; }
+        float GetHeight() const             { return mResolution.Height; }
 
-        bool IsFullScreen() const { return mFullScreen; }
+        void SetFullScreen(bool enabled)    { mFullScreen = enabled; }
+        bool IsFullScreen() const           { return mFullScreen; }
 
     private:
         Size mResolution{ 2560.f, 1440.f };
 
-        bool mFullScreen{ false };
+        bool mFullScreen{ true };
     };
 }
