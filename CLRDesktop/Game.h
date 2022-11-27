@@ -11,6 +11,11 @@
 
 import Settings;
 
+namespace CLR
+{
+    class Renderer;
+}
+
 // A basic game implementation that creates a D3D12 device and
 // provides a game loop.
 class Game final : public DX::IDeviceNotify
@@ -67,4 +72,6 @@ private:
     DX::StepTimer                           m_timer;
 
     CLR::DisplaySettings                    mDisplaySettings;
+
+    std::unique_ptr<CLR::Renderer>          mRenderer;
 };

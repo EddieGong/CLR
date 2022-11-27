@@ -5,7 +5,9 @@
 #include "Headers.h"
 #include "Game.h"
 
-extern void ExitGame() noexcept;
+#include "Renderer.h"
+
+import Utils;
 
 using namespace DirectX;
 
@@ -21,6 +23,8 @@ Game::Game() noexcept(false)
     m_deviceResources->RegisterDeviceNotify(this);
 
     // TODO: fetch the screen resolution
+
+    mRenderer = std::make_unique<CLR::Renderer>();
 }
 
 Game::~Game()
@@ -132,11 +136,13 @@ void Game::Clear()
 void Game::OnActivated()
 {
     // TODO: Game is becoming active window.
+    int i = 0; i;
 }
 
 void Game::OnDeactivated()
 {
     // TODO: Game is becoming background window.
+    int i = 0; i;
 }
 
 void Game::OnSuspending()

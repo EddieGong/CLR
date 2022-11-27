@@ -82,6 +82,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
         const bool isFullScreen = g_game->DisplaySetting().IsFullScreen();
 
+        // TODO: Check the paraemters for creating Window
         HWND hwnd = CreateWindowExW(isFullScreen ? WS_EX_TOPMOST : 0, L"CLRDesktopWindowClass", g_szAppName, isFullScreen ? WS_POPUP : WS_OVERLAPPEDWINDOW,
             CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
             nullptr);
@@ -127,7 +128,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     static bool s_in_suspend = false;
     static bool s_minimized = false;
     static bool s_fullscreen = false;
-    // TODO: Set s_fullscreen to true if defaulting to fullscreen.
 
     auto game = reinterpret_cast<Game*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
     if (game)

@@ -89,11 +89,11 @@
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <Optimization>MaxSpeed</Optimization>
       <PreprocessorDefinitions>NDEBUG;__WRL_NO_DEFAULT_LIB__;USING_D3D12_AGILITY_SDK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <ConformanceMode>true</ConformanceMode>
@@ -173,6 +173,7 @@
     <ClInclude Include="..\Source\GraphicsCore.h" />
     <ClInclude Include="..\Source\GraphicsDX12.h" />
     <ClInclude Include="..\Source\GraphicsTypes.h" />
+    <ClInclude Include="..\Source\Renderer.h" />
     <ClInclude Include="..\Source\Vector.h" />
     <ClInclude Include="d3dx12.h" />
     <ClInclude Include="DeviceResources.h" />
@@ -183,6 +184,7 @@
   <ItemGroup>
     <ClCompile Include="..\Source\GraphicsCore.cpp" />
     <ClCompile Include="..\Source\GraphicsDX12.cpp" />
+    <ClCompile Include="..\Source\Renderer.cpp" />
     <ClCompile Include="..\Source\Settings.ixx" />
     <ClCompile Include="..\Source\Utils.cpp" />
     <ClCompile Include="..\Source\Utils.ixx" />
