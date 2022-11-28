@@ -170,7 +170,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\BasicTypes.h" />
-    <ClInclude Include="..\Source\GraphicsCore.h" />
     <ClInclude Include="..\Source\GraphicsDX12.h" />
     <ClInclude Include="..\Source\GraphicsTypes.h" />
     <ClInclude Include="..\Source\Renderer.h" />
@@ -182,8 +181,8 @@
     <ClInclude Include="StepTimer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\GraphicsCore.cpp" />
-    <ClCompile Include="..\Source\GraphicsDX12.cpp" />
+    <ClCompile Include="..\Source\GraphicsCore.ixx" />
+    <ClCompile Include="..\Source\GraphicsDeviceDX12.cpp" />
     <ClCompile Include="..\Source\Renderer.cpp" />
     <ClCompile Include="..\Source\Settings.ixx" />
     <ClCompile Include="..\Source\Utils.cpp" />

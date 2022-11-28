@@ -33,9 +33,6 @@
     <ClInclude Include="..\Source\GraphicsDX12.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\GraphicsCore.h">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="Headers.h">
       <Filter>Source</Filter>
     </ClInclude>
@@ -51,12 +48,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\GraphicsCore.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\GraphicsDX12.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Settings.ixx">
       <Filter>Source</Filter>
     </ClCompile>
@@ -67,6 +58,12 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Renderer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GraphicsCore.ixx">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GraphicsDeviceDX12.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

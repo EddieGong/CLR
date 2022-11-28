@@ -1,8 +1,7 @@
 
 #include <Renderer.h>
-#include <GraphicsCore.h>
 
-//import GraphicsDX12;
+import CLR.Graphics.Core;
 
 namespace CLR
 {
