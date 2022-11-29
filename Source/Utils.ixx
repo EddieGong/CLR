@@ -14,6 +14,8 @@ namespace CLR
     template<bool USE_FILE>
     void LOG_ERROR(const char* error);
 
+    export void LOG_DEBUG_INFO(char const* warning);
+
     //inline std::string HrToString(HRESULT hr)
     //{
     //    char s_str[64] = {};

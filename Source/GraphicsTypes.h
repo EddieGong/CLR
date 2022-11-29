@@ -6,8 +6,8 @@ namespace CLR::Graphics
 
     struct DeviceCreateParameters
     {
-        bool debugLayerEnabled{ false };
-        bool useWarpDevice{ false };
+        bool debugLayerEnabled  { false };
+        bool useWarpDevice      { false };
     };
 
     using HDevice = Device*;

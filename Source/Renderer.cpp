@@ -23,6 +23,10 @@ namespace CLR
     void Renderer::CreateDeviceResources()
     {
         Graphics::DeviceCreateParameters param;
+#if _DEBUG
+        // TODO: Use command arguments
+        param.debugLayerEnabled = true;
+#endif
         mDevice = Graphics::CreateDevice(param);
     }
 }

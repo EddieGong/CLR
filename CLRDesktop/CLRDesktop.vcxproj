@@ -187,6 +187,7 @@
     <ClCompile Include="..\Source\Settings.ixx" />
     <ClCompile Include="..\Source\Utils.cpp" />
     <ClCompile Include="..\Source\Utils.ixx" />
+    <ClCompile Include="..\Source\UtilsWin64.cpp" />
     <ClCompile Include="DeviceResources.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp">

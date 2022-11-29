@@ -9,8 +9,11 @@ namespace CLR::Graphics
 {
     struct Device
     {
-        ID3D12Device* mD3dDevice {nullptr};
+		ID3D12Device*           D3dDevice           { nullptr };
 
-        DeviceCreateParameters mCreateParams;
+        DeviceCreateParameters  CreateParams;
+
+        // Cached device properties
+		DWORD                   DXGIFactoryFlags    { 0 };
     };
 }
