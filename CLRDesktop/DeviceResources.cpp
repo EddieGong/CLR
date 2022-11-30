@@ -5,8 +5,11 @@
 #include "Headers.h"
 #include "DeviceResources.h"
 
+import Utils;
+
 using namespace DirectX;
 using namespace DX;
+using namespace CLR;
 
 using Microsoft::WRL::ComPtr;
 
