@@ -26,7 +26,7 @@ namespace CLR::Graphics
             }
             else
             {
-                LOG_DEBUG_INFO("WARNING: Direct3D Debug Device is not available\n");
+                LOG_INFO("WARNING: Direct3D Debug Device is not available\n");
             }
 
             ComPtr<IDXGIInfoQueue> dxgiInfoQueue;
@@ -52,6 +52,18 @@ namespace CLR::Graphics
         ComPtr<IDXGIFactory6> dxgiFactory;
         ThrowIfFailed(CreateDXGIFactory2(device->DXGIFactoryFlags, IID_PPV_ARGS(dxgiFactory.GetAddressOf())));
         device->DXGIFactory = dxgiFactory.Get();
+
+        // Ref: Variable refresh-rate displays https://walbourn.github.io/care-and-feeding-of-modern-swap-chains-3/
+        if (device->Options & (uint32_t)Option::AllowTearing)
+        {
+            bool allowTearing = false;
+            HRESULT hr = device->DXGIFactory->CheckFeatureSupport(DXGI_FEATURE_PRESENT_ALLOW_TEARING, &allowTearing, sizeof(allowTearing));
+            if (FAILED(hr) || !allowTearing)
+            {
+                device->Options &= ~((uint32_t)Option::AllowTearing);
+                LOG_DEBUG_INFO("WARNING: Variable refresh rate displays not supported");
+            }
+        }
 
         return device;
     }

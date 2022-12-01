@@ -16,7 +16,8 @@ namespace CLR
     template<bool USE_FILE>
     void LOG_ERROR(const char* error);
 
-    export void LOG_DEBUG_INFO(char const* warning);
+    export void LOG_INFO(char const* str);
+    export void LOG_DEBUG_INFO(char const* str);
 
     export void ThrowIfFailed(HRESULT hr);
 }

@@ -6,10 +6,18 @@ module Utils;
 
 namespace CLR
 {
-    void LOG_DEBUG_INFO(char const* str)
+    void LOG_INFO(char const* str)
     {
         OutputDebugStringA(str);
     }
+
+    void LOG_DEBUG_INFO(char const* str)
+    {
+#ifdef _DEBUG
+        LOG_INFO(str);
+#endif
+    }
+
 
     // Helper class for COM exceptions
     class com_exception : public std::exception

@@ -9,9 +9,10 @@ namespace CLR::Graphics
 {
     enum class Option
     {
-        AllowTearing    = 1 >> 0,
-        EnableHDR       = 1 >> 1,
-        ReverseDepth    = 1 >> 2,
+        AllowTearing    = 1 << 0,
+        EnableHDR       = 1 << 1,
+        ReverseDepth    = 1 << 2,
+        AllFeatures     = AllowTearing | EnableHDR | ReverseDepth,
     };
 
 
@@ -26,6 +27,6 @@ namespace CLR::Graphics
         // Cached device properties
 		DWORD                   DXGIFactoryFlags    { 0 };
 
-        uint32_t                Options             { 0 };
+        uint32_t                Options             { (uint32_t)Option::AllFeatures };
     };
 }
