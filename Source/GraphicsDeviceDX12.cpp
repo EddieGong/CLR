@@ -1,6 +1,7 @@
 module;
 
 #include "Headers.h"
+#include "BasicTypes.h"
 #include "GraphicsDX12.h"
 
 module CLR.Graphics.Core;
@@ -43,6 +44,38 @@ namespace CLR::Graphics
 #endif
     }
 
+    void GetAdapter(IDXGIFactory6* dxgiFactory, IDXGIAdapter1*& pAdapter, bool highPerf, D3D_FEATURE_LEVEL featureLevel)
+    {
+        pAdapter = nullptr;
+
+        DXGI_GPU_PREFERENCE gpuPref = highPerf ? DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE : DXGI_GPU_PREFERENCE_MINIMUM_POWER;
+
+        ComPtr<IDXGIAdapter1> adapter;
+        for (uint32 adapterIndex = 0; SUCCEEDED(dxgiFactory->EnumAdapterByGpuPreference(adapterIndex, gpuPref, IID_PPV_ARGS(adapter.ReleaseAndGetAddressOf()))); ++adapterIndex)
+        {
+            DXGI_ADAPTER_DESC1 desc;
+            ThrowIfFailed(adapter->GetDesc1(&desc));
+
+            if (desc.Flags & DXGI_ADAPTER_FLAG3_SOFTWARE)
+            {
+                // Don't select the Basic Render Driver adapter.
+                continue;
+            }
+
+            // Check but don't create the actuall device
+            if (SUCCEEDED(D3D12CreateDevice(adapter.Get(), featureLevel, _uuidof(ID3D12Device), nullptr)))
+            {
+#ifdef _DEBUG
+                wchar_t buff[256]{};
+                swprintf_s(buff, L"Direct3D Adapter #%u: VenderID: %04X, DeviceID: %04X - %ls\n",
+                    adapterIndex, desc.VendorId, desc.DeviceId, desc.Description);
+                OutputDebugStringW(buff);
+#endif
+                break;
+            }
+        }
+    }
+
     HDevice CreateDevice(DeviceCreateParameters const& createParams)
     {       
         Device* device = new Device();
@@ -64,6 +97,9 @@ namespace CLR::Graphics
                 LOG_DEBUG_INFO("WARNING: Variable refresh rate displays not supported");
             }
         }
+
+        ComPtr<IDXGIAdapter1> adapter;
+        GetAdapter(device->DXGIFactory, *adapter.GetAddressOf(), true, device->MinFeatureLevel);
 
         return device;
     }

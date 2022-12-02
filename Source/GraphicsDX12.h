@@ -12,7 +12,7 @@ namespace CLR::Graphics
         AllowTearing    = 1 << 0,
         EnableHDR       = 1 << 1,
         ReverseDepth    = 1 << 2,
-        AllFeatures     = AllowTearing | EnableHDR | ReverseDepth,
+        All             = AllowTearing | EnableHDR | ReverseDepth,
     };
 
 
@@ -26,7 +26,8 @@ namespace CLR::Graphics
 
         // Cached device properties
 		DWORD                   DXGIFactoryFlags    { 0 };
+        D3D_FEATURE_LEVEL       MinFeatureLevel     { D3D_FEATURE_LEVEL_12_0 };
 
-        uint32_t                Options             { (uint32_t)Option::AllFeatures };
+        uint32_t                Options             { (uint32_t)Option::All };
     };
 }
