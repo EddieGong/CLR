@@ -7,6 +7,8 @@
 
 namespace CLR::Graphics
 {
+    using IDXGIFactoryX = IDXGIFactory6;
+
     enum class Option
     {
         AllowTearing    = 1 << 0,
@@ -15,12 +17,11 @@ namespace CLR::Graphics
         All             = AllowTearing | EnableHDR | ReverseDepth,
     };
 
-
     struct Device
     {
 		ID3D12Device*           D3DDevice           { nullptr };
 
-        IDXGIFactory6*          DXGIFactory         { nullptr };
+        IDXGIFactoryX*          DXGIFactory         { nullptr };
 
         DeviceCreateParameters  CreateParams;
 
@@ -30,4 +31,8 @@ namespace CLR::Graphics
 
         uint32_t                Options             { (uint32_t)Option::All };
     };
+
+    void CheckVariableRefreshRateSupport(IDXGIFactoryX* dxgiFactory, uint32_t& options);
+    
+    void GetAdapter(IDXGIFactoryX* dxgiFactory, IDXGIAdapter1*& pAdapter, D3D_FEATURE_LEVEL featureLevel, bool highPerf = true);
 }

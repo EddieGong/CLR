@@ -44,7 +44,31 @@ namespace CLR::Graphics
 #endif
     }
 
-    void GetAdapter(IDXGIFactory6* dxgiFactory, IDXGIAdapter1*& pAdapter, bool highPerf, D3D_FEATURE_LEVEL featureLevel)
+
+    HDevice CreateDevice(DeviceCreateParameters const& createParams)
+    {       
+        Device* device = new Device();
+
+        EnableDebugLayer(device, createParams.debugLayerEnabled);
+
+        ComPtr<IDXGIFactoryX> dxgiFactory;
+        ThrowIfFailed(CreateDXGIFactory2(device->DXGIFactoryFlags, IID_PPV_ARGS(dxgiFactory.GetAddressOf())));
+        device->DXGIFactory = dxgiFactory.Get();
+
+        CheckVariableRefreshRateSupport(device->DXGIFactory, device->Options);
+
+        ComPtr<IDXGIAdapter1> adapter;
+        GetAdapter(device->DXGIFactory, *adapter.GetAddressOf(), device->MinFeatureLevel);
+
+        return device;
+    }
+
+    void DestroyDevice(HDevice device)
+    {
+        device;
+    }
+
+    void GetAdapter(IDXGIFactoryX* dxgiFactory, IDXGIAdapter1*& pAdapter, D3D_FEATURE_LEVEL featureLevel, bool highPerf)
     {
         pAdapter = nullptr;
 
@@ -71,41 +95,25 @@ namespace CLR::Graphics
                     adapterIndex, desc.VendorId, desc.DeviceId, desc.Description);
                 OutputDebugStringW(buff);
 #endif
+
                 break;
             }
         }
     }
 
-    HDevice CreateDevice(DeviceCreateParameters const& createParams)
-    {       
-        Device* device = new Device();
-
-        EnableDebugLayer(device, createParams.debugLayerEnabled);
-
-        ComPtr<IDXGIFactory6> dxgiFactory;
-        ThrowIfFailed(CreateDXGIFactory2(device->DXGIFactoryFlags, IID_PPV_ARGS(dxgiFactory.GetAddressOf())));
-        device->DXGIFactory = dxgiFactory.Get();
-
+    void CheckVariableRefreshRateSupport(IDXGIFactoryX* dxgiFactory, uint32_t& options)
+    {
         // Ref: Variable refresh-rate displays https://walbourn.github.io/care-and-feeding-of-modern-swap-chains-3/
-        if (device->Options & (uint32_t)Option::AllowTearing)
+        if (options & (uint32_t)Option::AllowTearing)
         {
-            bool allowTearing = false;
-            HRESULT hr = device->DXGIFactory->CheckFeatureSupport(DXGI_FEATURE_PRESENT_ALLOW_TEARING, &allowTearing, sizeof(allowTearing));
+            // TONOTE: can't use bool because CheckFeatureSupport needs a 32 bits type
+            BOOL allowTearing = false;
+            HRESULT hr = dxgiFactory->CheckFeatureSupport(DXGI_FEATURE_PRESENT_ALLOW_TEARING, &allowTearing, sizeof(allowTearing));
             if (FAILED(hr) || !allowTearing)
             {
-                device->Options &= ~((uint32_t)Option::AllowTearing);
+                options &= ~((uint32_t)Option::AllowTearing);
                 LOG_DEBUG_INFO("WARNING: Variable refresh rate displays not supported");
             }
         }
-
-        ComPtr<IDXGIAdapter1> adapter;
-        GetAdapter(device->DXGIFactory, *adapter.GetAddressOf(), true, device->MinFeatureLevel);
-
-        return device;
-    }
-
-    void DestroyDevice(HDevice device)
-    {
-        device;
     }
 }
