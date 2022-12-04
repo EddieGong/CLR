@@ -173,7 +173,6 @@
     <ClInclude Include="..\Source\GraphicsDX12.h" />
     <ClInclude Include="..\Source\GraphicsTypes.h" />
     <ClInclude Include="..\Source\Renderer.h" />
-    <ClInclude Include="..\Source\Vector.h" />
     <ClInclude Include="d3dx12.h" />
     <ClInclude Include="DeviceResources.h" />
     <ClInclude Include="Game.h" />
@@ -188,6 +187,7 @@
     <ClCompile Include="..\Source\Utils.cpp" />
     <ClCompile Include="..\Source\Utils.ixx" />
     <ClCompile Include="..\Source\UtilsWin64.cpp" />
+    <ClCompile Include="..\Source\Vector.ixx" />
     <ClCompile Include="DeviceResources.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp">

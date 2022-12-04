@@ -6,7 +6,8 @@ module;
 
 module CLR.Graphics.Core;
 
-import Utils;
+import CLR.Math.Vector;
+import CLR.Utils;
 
 using Microsoft::WRL::ComPtr;
 
@@ -57,8 +58,18 @@ namespace CLR::Graphics
 
         CheckVariableRefreshRateSupport(device->DXGIFactory, device->Options);
 
-        ComPtr<IDXGIAdapter1> adapter;
-        GetAdapter(device->DXGIFactory, *adapter.GetAddressOf(), device->MinFeatureLevel);
+        ComPtr<IDXGIAdapter1> dxgiAdapter;
+        GetAdapter(device->DXGIFactory, *dxgiAdapter.GetAddressOf(), device->MinFeatureLevel);
+
+        ComPtr<ID3D12Device> d3dDevice;
+        HRESULT hr = D3D12CreateDevice(dxgiAdapter.Get(), device->MinFeatureLevel, IID_PPV_ARGS(d3dDevice.GetAddressOf()));
+        ThrowIfFailed(hr);
+
+        d3dDevice->SetName(L"D3D12 Device (CLR)");
+
+        // TODO: Use ID3D12InfoQueue to configure debug devie?
+
+
 
         return device;
     }
@@ -68,9 +79,9 @@ namespace CLR::Graphics
         device;
     }
 
-    void GetAdapter(IDXGIFactoryX* dxgiFactory, IDXGIAdapter1*& pAdapter, D3D_FEATURE_LEVEL featureLevel, bool highPerf)
+    void GetAdapter(IDXGIFactoryX* dxgiFactory, IDXGIAdapter1*& dxgiAdapter, D3D_FEATURE_LEVEL featureLevel, bool highPerf)
     {
-        pAdapter = nullptr;
+        dxgiAdapter = nullptr;
 
         DXGI_GPU_PREFERENCE gpuPref = highPerf ? DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE : DXGI_GPU_PREFERENCE_MINIMUM_POWER;
 
@@ -115,5 +126,19 @@ namespace CLR::Graphics
                 LOG_DEBUG_INFO("WARNING: Variable refresh rate displays not supported");
             }
         }
+    }
+
+    D3D_FEATURE_LEVEL GetMaxSupportedFeatureLevel(ID3D12Device* d3dDevice, D3D_FEATURE_LEVEL minFeatureLevel)
+    {
+ //       std::array<D3D_FEATURE_LEVEL,3> sFeatureLevels =
+ //       {
+ //#ifdef USING_D3D12_AGILITY_SDK
+ //           D3D_FEATURE_LEVEL_12_2,
+ //#endif
+ //           D3D_FEATURE_LEVEL_12_1,
+ //           D3D_FEATURE_LEVEL_12_0,
+ //       };
+
+        return D3D_FEATURE_LEVEL_12_2;
     }
 }

@@ -7,7 +7,7 @@
 
 #include "Renderer.h"
 
-import Utils;
+import CLR.Utils;
 
 using namespace DirectX;
 

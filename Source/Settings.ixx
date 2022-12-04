@@ -1,4 +1,4 @@
-export module Settings;
+export module CLR.Settings;
 
 #include "BasicTypes.h"
 

@@ -5,7 +5,7 @@
 #include "Headers.h"
 #include "Game.h"
 
-import Utils;
+import CLR.Utils;
 
 using namespace DirectX;
 

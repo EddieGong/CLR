@@ -9,7 +9,7 @@
 
 #include "BasicTypes.h"
 
-import Settings;
+import CLR.Settings;
 
 namespace CLR
 {

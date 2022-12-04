@@ -21,9 +21,6 @@
     <ClInclude Include="Game.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Vector.h">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\BasicTypes.h">
       <Filter>Source</Filter>
     </ClInclude>
@@ -67,6 +64,9 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UtilsWin64.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Vector.ixx">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

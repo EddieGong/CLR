@@ -1,5 +1,5 @@
 
-export module Utils;
+export module CLR.Utils;
 
 namespace CLR
 {

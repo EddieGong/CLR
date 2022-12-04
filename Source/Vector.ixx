@@ -1,10 +1,10 @@
-#pragma once
-
-#include <BasicTypes.h>
+export module CLR.Math.Vector;
 
 import <array>;
 
-namespace CLR::Math
+import <BasicTypes.h>;
+
+export namespace CLR::Math
 {
     template<typename T, size_t N>
     class Vector
@@ -29,7 +29,7 @@ namespace CLR::Math
         template<typename... Ts>
         Vector(T v0, Ts... args)
         {
-            this->mV = {v0, args...};
+            this->mV = { v0, args... };
         }
 
         inline T operator[](const uint32 index) const { return mV.at(index); }

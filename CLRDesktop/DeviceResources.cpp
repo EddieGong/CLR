@@ -5,7 +5,7 @@
 #include "Headers.h"
 #include "DeviceResources.h"
 
-import Utils;
+import CLR.Utils;
 
 using namespace DirectX;
 using namespace DX;

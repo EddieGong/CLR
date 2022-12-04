@@ -2,7 +2,7 @@ module;
 
 #include "Headers.h"
 
-module Utils;
+module CLR.Utils;
 
 namespace CLR
 {

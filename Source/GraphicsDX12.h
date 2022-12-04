@@ -25,14 +25,18 @@ namespace CLR::Graphics
 
         DeviceCreateParameters  CreateParams;
 
+        D3D_FEATURE_LEVEL       MinFeatureLevel     { D3D_FEATURE_LEVEL_12_0 };
+
         // Cached device properties
 		DWORD                   DXGIFactoryFlags    { 0 };
-        D3D_FEATURE_LEVEL       MinFeatureLevel     { D3D_FEATURE_LEVEL_12_0 };
+        D3D_FEATURE_LEVEL       D3DFeatureLevel     { MinFeatureLevel };
 
         uint32_t                Options             { (uint32_t)Option::All };
     };
 
     void CheckVariableRefreshRateSupport(IDXGIFactoryX* dxgiFactory, uint32_t& options);
     
-    void GetAdapter(IDXGIFactoryX* dxgiFactory, IDXGIAdapter1*& pAdapter, D3D_FEATURE_LEVEL featureLevel, bool highPerf = true);
+    void GetAdapter(IDXGIFactoryX* dxgiFactory, IDXGIAdapter1*& dxgiAdapter, D3D_FEATURE_LEVEL featureLevel, bool highPerf = true);
+
+    D3D_FEATURE_LEVEL GetMaxSupportedFeatureLevel(ID3D12Device* d3dDevice, D3D_FEATURE_LEVEL minFeatureLevel);
 }

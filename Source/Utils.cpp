@@ -1,4 +1,4 @@
-module Utils;
+module CLR.Utils;
 
 import <cassert>;
 import <iostream>;

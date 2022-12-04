@@ -1,9 +1,11 @@
 
 #include "CppUnitTest.h"
 
-#include <Vector.h>
+//#include <Vector.h>
 
-import Utils;
+import <format>;
+import CLR.Utils;
+import CLR.Math.Vector;
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -17,7 +19,7 @@ namespace UnitTest
 	{
 	public:
 		
-		TEST_METHOD(TestMethod1)
+		TEST_METHOD(Vector)
 		{
 			Math::Vector3f vec3_a;
 			Math::Vector3f vec3_b(1.f, 0.f, -1.f);
@@ -30,6 +32,12 @@ namespace UnitTest
 			char vec_str[256]{};
 			sprintf_s(vec_str, "vec.x = %f, vec.y = %f, vec.z = %f", vec3_b[0], vec3_b[1], vec3_b[2]);
 			Logger::WriteMessage(vec_str);
+		}
+
+		TEST_METHOD(CppFormat)
+		{
+			std::string str = std::format("{} {}!", "Hello", "world", "something");
+			Logger::WriteMessage(str.c_str());
 		}
 	};
 }
