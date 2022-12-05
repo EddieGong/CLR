@@ -1,14 +1,14 @@
 
 export module CLR.Utils;
 
-namespace CLR
+export namespace CLR
 {
     using HRESULT = long;
 
-    export void ASSERT(bool exp, char const* msg);
+    void ASSERT(bool exp, char const* msg);
 
-    export template<typename... Args>
-    void UNUSED_PARAMS(const Args& ...arg)
+    template<typename... Args>
+    constexpr void UNUSED_PARAMS(const Args& ...arg)
     {
         (arg, ...);
     }
@@ -16,8 +16,15 @@ namespace CLR
     template<bool USE_FILE>
     void LOG_ERROR(const char* error);
 
-    export void LOG_INFO(char const* str);
-    export void LOG_DEBUG_INFO(char const* str);
+    void LOG_INFO(char const* str);
+    void LOG_DEBUG_INFO(char const* str);
+    
+    void ThrowIfFailed(HRESULT hr);
 
-    export void ThrowIfFailed(HRESULT hr);
+    // TONOTE: equivalent to std::size, use it if there is no proper std header included
+    template<typename T, size_t N>
+    constexpr size_t GetArrayLength(T const (&array)[N]) noexcept
+    {
+        return sizeof(array) / sizeof(T);
+    }
 }

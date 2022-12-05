@@ -36,7 +36,19 @@ namespace UnitTest
 
 		TEST_METHOD(CppFormat)
 		{
-			std::string str = std::format("{} {}!", "Hello", "world", "something");
+			std::string str = std::format("{} {}!\n", "Hello", "world", "something");
+			Logger::WriteMessage(str.c_str());
+
+			struct TestArrayType
+			{
+				int a;
+				float b;
+			};
+			TestArrayType testArray[] = { {1, 1.f}, {3, 1.f}, {0, 4.f} };
+			str = std::format("GetArrayLength = {}\n", GetArrayLength(testArray));
+			Logger::WriteMessage(str.c_str());
+
+			str = std::format("std::size = {}\n", std::size(testArray));
 			Logger::WriteMessage(str.c_str());
 		}
 	};

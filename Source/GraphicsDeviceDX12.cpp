@@ -66,10 +66,11 @@ namespace CLR::Graphics
         ThrowIfFailed(hr);
 
         d3dDevice->SetName(L"D3D12 Device (CLR)");
+        device->D3DDevice = d3dDevice.Get();
 
         // TODO: Use ID3D12InfoQueue to configure debug devie?
 
-
+        device->D3DFeatureLevel = GetMaxSupportedFeatureLevel(device->D3DDevice, device->MinFeatureLevel);
 
         return device;
     }
@@ -130,15 +131,19 @@ namespace CLR::Graphics
 
     D3D_FEATURE_LEVEL GetMaxSupportedFeatureLevel(ID3D12Device* d3dDevice, D3D_FEATURE_LEVEL minFeatureLevel)
     {
- //       std::array<D3D_FEATURE_LEVEL,3> sFeatureLevels =
- //       {
- //#ifdef USING_D3D12_AGILITY_SDK
- //           D3D_FEATURE_LEVEL_12_2,
- //#endif
- //           D3D_FEATURE_LEVEL_12_1,
- //           D3D_FEATURE_LEVEL_12_0,
- //       };
+        static D3D_FEATURE_LEVEL sFeatureLevels[] =
+        {
+ #ifdef USING_D3D12_AGILITY_SDK
+            D3D_FEATURE_LEVEL_12_2,
+ #endif
+            D3D_FEATURE_LEVEL_12_1,
+            D3D_FEATURE_LEVEL_12_0,
+        };
 
-        return D3D_FEATURE_LEVEL_12_2;
+        ASSERT(minFeatureLevel == sFeatureLevels[GetArrayLength(sFeatureLevels) - 1], "Min feature level is not matched in the code");
+        D3D12_FEATURE_DATA_FEATURE_LEVELS featureLevels{ static_cast<UINT>(std::size(sFeatureLevels)), sFeatureLevels, minFeatureLevel };
+
+        HRESULT hr = d3dDevice->CheckFeatureSupport(D3D12_FEATURE_FEATURE_LEVELS, &featureLevels, sizeof(featureLevels));
+        return SUCCEEDED(hr) ? featureLevels.MaxSupportedFeatureLevel : minFeatureLevel;
     }
 }
