@@ -12,7 +12,7 @@ namespace CLR
     }
     Renderer::~Renderer()
     {
-        Graphics::DestroyDevice(mDevice);
+        Graphics::Core::DestroyDevice(mDevice);
     }
 
     void Renderer::CreateDeviceIndependentResources()
@@ -22,11 +22,11 @@ namespace CLR
 
     void Renderer::CreateDeviceResources()
     {
-        Graphics::DeviceCreateParameters param;
+        Graphics::Core::DeviceCreateParameters param;
 #if _DEBUG
         // TODO: Use command arguments
         param.debugLayerEnabled = true;
 #endif
-        mDevice = Graphics::CreateDevice(param);
+        mDevice = Graphics::Core::CreateDevice(param);
     }
 }

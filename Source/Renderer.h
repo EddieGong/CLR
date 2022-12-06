@@ -16,7 +16,7 @@ namespace CLR
         void CreateDeviceResources();
 
     private:
-        Graphics::HDevice mDevice { nullptr };
+        Graphics::Core::HDevice mDevice { nullptr };
 
         // Display device resolution
         Size mDisplaySize;

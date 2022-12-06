@@ -11,7 +11,7 @@ import CLR.Utils;
 
 using Microsoft::WRL::ComPtr;
 
-namespace CLR::Graphics
+namespace CLR::Graphics::Core
 {
     void EnableDebugLayer(Device* device, bool debugLayerEnabled)
     {

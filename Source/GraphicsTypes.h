@@ -1,6 +1,6 @@
 #pragma once
 
-namespace CLR::Graphics
+namespace CLR::Graphics::Core
 {
     struct Device;
 
@@ -11,4 +11,12 @@ namespace CLR::Graphics
     };
 
     using HDevice = Device*;
+
+    enum class Option
+    {
+        AllowTearing    = 1 << 0,
+        EnableHDR       = 1 << 1,
+        ReverseDepth    = 1 << 2,
+        All             = AllowTearing | EnableHDR | ReverseDepth,
+    };
 }

@@ -173,7 +173,9 @@
     <ClInclude Include="..\Source\GraphicsDX12.h" />
     <ClInclude Include="..\Source\GraphicsTypes.h" />
     <ClInclude Include="..\Source\Renderer.h" />
-    <ClInclude Include="d3dx12.h" />
+    <ClInclude Include="d3dx12.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="DeviceResources.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Headers.h" />
