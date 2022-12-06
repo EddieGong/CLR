@@ -66,7 +66,7 @@ namespace CLR::Graphics
         ThrowIfFailed(hr);
 
         d3dDevice->SetName(L"D3D12 Device (CLR)");
-        device->D3DDevice = d3dDevice.Get();
+        device->D3DDevice = d3dDevice.Detach();
 
         // TODO: Use ID3D12InfoQueue to configure debug devie?
 
@@ -107,10 +107,18 @@ namespace CLR::Graphics
                     adapterIndex, desc.VendorId, desc.DeviceId, desc.Description);
                 OutputDebugStringW(buff);
 #endif
-
                 break;
             }
         }
+
+        // TODO: try warp12 instead
+
+        if (adapter == nullptr)
+        {
+            throw std::runtime_error("No Direct3D 12 device found");
+        }
+
+        dxgiAdapter = adapter.Detach();
     }
 
     void CheckVariableRefreshRateSupport(IDXGIFactoryX* dxgiFactory, uint32_t& options)
@@ -131,7 +139,7 @@ namespace CLR::Graphics
 
     D3D_FEATURE_LEVEL GetMaxSupportedFeatureLevel(ID3D12Device* d3dDevice, D3D_FEATURE_LEVEL minFeatureLevel)
     {
-        static D3D_FEATURE_LEVEL sFeatureLevels[] =
+        static const D3D_FEATURE_LEVEL sFeatureLevels[] =
         {
  #ifdef USING_D3D12_AGILITY_SDK
             D3D_FEATURE_LEVEL_12_2,

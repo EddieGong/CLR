@@ -30,10 +30,10 @@
     <ClInclude Include="..\Source\GraphicsDX12.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Headers.h">
+    <ClInclude Include="..\Source\Renderer.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Renderer.h">
+    <ClInclude Include="Headers.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
