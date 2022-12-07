@@ -1,7 +1,7 @@
 #pragma once
 
 #include <BasicTypes.h>
-#include <GraphicsTypes.h>
+#include <GraphicsCoreTypes.h>
 
 namespace CLR
 {

@@ -24,10 +24,10 @@
     <ClInclude Include="..\Source\BasicTypes.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\GraphicsTypes.h">
+    <ClInclude Include="..\Source\GraphicsCoreTypes.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\GraphicsDX12.h">
+    <ClInclude Include="..\Source\GraphicsCoreDX12.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Renderer.h">
@@ -60,7 +60,7 @@
     <ClCompile Include="..\Source\GraphicsCore.ixx">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\GraphicsDeviceDX12.cpp">
+    <ClCompile Include="..\Source\GraphicsCoreDX12.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UtilsWin64.cpp">

@@ -5,11 +5,6 @@ import <iostream>;
 
 namespace CLR
 {
-    void ASSERT(bool exp, char const* msg)
-    {
-        assert(((void)msg, exp));
-    }
-
     // std::cerr is not buffered
     template<bool USE_FILE>
     void LOG_ERROR(const char* error)
@@ -22,5 +17,12 @@ namespace CLR
         {
             std::clog << error << std::endl;
         }
+    }
+
+    // TODO: it doesn't work with message. Rewrite the function.
+    void ASSERT(bool exp, const char* msg)
+    {
+        assert(((void)msg, exp));
+        LOG_ERROR<false>(msg);
     }
 }

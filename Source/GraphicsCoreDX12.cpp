@@ -2,7 +2,7 @@ module;
 
 #include "Headers.h"
 #include "BasicTypes.h"
-#include "GraphicsDX12.h"
+#include "GraphicsCoreDX12.h"
 
 module CLR.Graphics.Core;
 
@@ -13,39 +13,6 @@ using Microsoft::WRL::ComPtr;
 
 namespace CLR::Graphics::Core
 {
-    void EnableDebugLayer(Device* device, bool debugLayerEnabled)
-    {
-#if defined(_DEBUG)
-        // Enable the debug layer (requires the Graphics Tools "optional feature").
-        //
-        // NOTE: Enabling the debug layer after device creation will invalidate the active device.
-        if (debugLayerEnabled)
-        {
-            ComPtr<ID3D12Debug> debugController;
-            if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(debugController.GetAddressOf()))))
-            {
-                debugController->EnableDebugLayer();
-            }
-            else
-            {
-                LOG_INFO("WARNING: Direct3D Debug Device is not available\n");
-            }
-
-            ComPtr<IDXGIInfoQueue> dxgiInfoQueue;
-            if (SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(dxgiInfoQueue.GetAddressOf()))))
-            {
-                device->DXGIFactoryFlags = DXGI_CREATE_FACTORY_DEBUG;
-
-                dxgiInfoQueue->SetBreakOnSeverity(DXGI_DEBUG_ALL, DXGI_INFO_QUEUE_MESSAGE_SEVERITY_ERROR, true);
-                dxgiInfoQueue->SetBreakOnSeverity(DXGI_DEBUG_ALL, DXGI_INFO_QUEUE_MESSAGE_SEVERITY_CORRUPTION, true);
-
-                // TODO: filters?
-            }
-        }
-#endif
-    }
-
-
     HDevice CreateDevice(DeviceCreateParameters const& createParams)
     {       
         Device* device = new Device();
@@ -77,7 +44,55 @@ namespace CLR::Graphics::Core
 
     void DestroyDevice(HDevice device)
     {
+        // TODO: 
+        ASSERT(false);
         device;
+    }
+    
+    // Command Queue
+    HCommandQueue CreateCommandQueue(CommandQueueType type)
+    {
+        HCommandQueue queue = nullptr;
+        return queue;
+    }
+
+    void DestroyCommandQueue(HCommandQueue queue)
+    {
+
+    }
+
+    // Internal functions
+
+    void EnableDebugLayer(Device* device, bool debugLayerEnabled)
+    {
+#if defined(_DEBUG)
+        // Enable the debug layer (requires the Graphics Tools "optional feature").
+        //
+        // NOTE: Enabling the debug layer after device creation will invalidate the active device.
+        if (debugLayerEnabled)
+        {
+            ComPtr<ID3D12Debug> debugController;
+            if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(debugController.GetAddressOf()))))
+            {
+                debugController->EnableDebugLayer();
+            }
+            else
+            {
+                LOG_INFO("WARNING: Direct3D Debug Device is not available\n");
+            }
+
+            ComPtr<IDXGIInfoQueue> dxgiInfoQueue;
+            if (SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(dxgiInfoQueue.GetAddressOf()))))
+            {
+                device->DXGIFactoryFlags = DXGI_CREATE_FACTORY_DEBUG;
+
+                dxgiInfoQueue->SetBreakOnSeverity(DXGI_DEBUG_ALL, DXGI_INFO_QUEUE_MESSAGE_SEVERITY_ERROR, true);
+                dxgiInfoQueue->SetBreakOnSeverity(DXGI_DEBUG_ALL, DXGI_INFO_QUEUE_MESSAGE_SEVERITY_CORRUPTION, true);
+
+                // TODO: filters?
+            }
+        }
+#endif
     }
 
     void GetAdapter(IDXGIFactoryX* dxgiFactory, IDXGIAdapter1*& dxgiAdapter, D3D_FEATURE_LEVEL featureLevel, bool highPerf)
@@ -153,5 +168,25 @@ namespace CLR::Graphics::Core
 
         HRESULT hr = d3dDevice->CheckFeatureSupport(D3D12_FEATURE_FEATURE_LEVELS, &featureLevels, sizeof(featureLevels));
         return SUCCEEDED(hr) ? featureLevels.MaxSupportedFeatureLevel : minFeatureLevel;
+    }
+
+    D3D12_COMMAND_LIST_TYPE GetInternalCommandQueueType(CommandQueueType type)
+    {
+        D3D12_COMMAND_LIST_TYPE internalType = D3D12_COMMAND_LIST_TYPE_NONE;
+        switch (type)
+        {
+        case CLR::Graphics::Core::CommandQueueType::Graphics:
+            internalType = D3D12_COMMAND_LIST_TYPE_DIRECT;
+            break;
+        case CLR::Graphics::Core::CommandQueueType::Compute:
+            internalType = D3D12_COMMAND_LIST_TYPE_COMPUTE;
+            break;
+        case CLR::Graphics::Core::CommandQueueType::Copy:
+            internalType = D3D12_COMMAND_LIST_TYPE_COPY;
+            break;
+        }
+
+        ASSERT(internalType != D3D12_COMMAND_LIST_TYPE_NONE, "Can't find correct D3D12 command queue type");
+        return internalType;
     }
 }

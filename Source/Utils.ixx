@@ -5,7 +5,7 @@ export namespace CLR
 {
     using HRESULT = long;
 
-    void ASSERT(bool exp, char const* msg);
+    void ASSERT(bool exp, char const* msg = nullptr);
 
     template<typename... Args>
     constexpr void UNUSED_PARAMS(const Args& ...arg)

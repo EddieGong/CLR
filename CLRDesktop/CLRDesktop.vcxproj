@@ -170,8 +170,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\BasicTypes.h" />
-    <ClInclude Include="..\Source\GraphicsDX12.h" />
-    <ClInclude Include="..\Source\GraphicsTypes.h" />
+    <ClInclude Include="..\Source\GraphicsCoreDX12.h" />
+    <ClInclude Include="..\Source\GraphicsCoreTypes.h" />
     <ClInclude Include="..\Source\Renderer.h" />
     <ClInclude Include="d3dx12.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">true</ExcludedFromBuild>
@@ -183,7 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\GraphicsCore.ixx" />
-    <ClCompile Include="..\Source\GraphicsDeviceDX12.cpp" />
+    <ClCompile Include="..\Source\GraphicsCoreDX12.cpp" />
     <ClCompile Include="..\Source\Renderer.cpp" />
     <ClCompile Include="..\Source\Settings.ixx" />
     <ClCompile Include="..\Source\Utils.cpp" />
