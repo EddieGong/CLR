@@ -53,7 +53,7 @@ public:
     // Properties
     void GetDefaultSize( int& width, int& height ) const noexcept;
 
-    CLR::DisplaySettings& DisplaySetting() { return mDisplaySettings; }
+    CLR::Settings::Display& DisplaySetting() { return mDisplaySettings; }
 
 private:
 
@@ -71,7 +71,7 @@ private:
     // Rendering loop timer.
     DX::StepTimer                           m_timer;
 
-    CLR::DisplaySettings                    mDisplaySettings;
+    CLR::Settings::Display                  mDisplaySettings;
 
     std::unique_ptr<CLR::Renderer>          mRenderer;
 };

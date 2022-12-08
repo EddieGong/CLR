@@ -3,6 +3,8 @@ module CLR.Utils;
 import <cassert>;
 import <iostream>;
 
+import CLR.Settings;
+
 namespace CLR
 {
     // std::cerr is not buffered
@@ -22,7 +24,13 @@ namespace CLR
     // TODO: it doesn't work with message. Rewrite the function.
     void ASSERT(bool exp, const char* msg)
     {
-        assert(((void)msg, exp));
-        LOG_ERROR<false>(msg);
+        if (Settings::Debug::AllowAssert)
+        {
+            if (exp == false)
+            {
+                throw std::exception(msg);
+                //LOG_ERROR<false>(msg);
+            }
+        }
     }
 }

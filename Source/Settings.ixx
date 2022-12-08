@@ -2,12 +2,12 @@ export module CLR.Settings;
 
 #include "BasicTypes.h"
 
-namespace CLR
+namespace CLR::Settings
 {
-    export class DisplaySettings
+    export class Display
     {
     public:
-        DisplaySettings() = default;
+        Display() = default;
 
         float GetWidth() const              { return mResolution.Width; }
         float GetHeight() const             { return mResolution.Height; }
@@ -19,5 +19,10 @@ namespace CLR
         Size mResolution{ 2560.f, 1440.f };
 
         bool mFullScreen{ false };
+    };
+
+    export namespace Debug
+    {
+        bool AllowAssert    { true };
     };
 }
