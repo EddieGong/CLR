@@ -39,6 +39,9 @@
     <ClInclude Include="..\Source\CLRAssert.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\json.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
