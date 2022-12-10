@@ -1,6 +1,5 @@
 module CLR.Utils;
 
-import <cassert>;
 import <iostream>;
 
 import CLR.Settings;
@@ -18,19 +17,6 @@ namespace CLR
         else
         {
             std::clog << error << std::endl;
-        }
-    }
-
-    // TODO: it doesn't work with message. Rewrite the function.
-    void ASSERT(bool exp, const char* msg)
-    {
-        if (Settings::Debug::AllowAssert)
-        {
-            if (exp == false)
-            {
-                throw std::exception(msg);
-                //LOG_ERROR<false>(msg);
-            }
         }
     }
 }

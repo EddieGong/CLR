@@ -2,6 +2,7 @@
 #include <Renderer.h>
 
 import CLR.Graphics.Core;
+import CLR.CmdLineArg;
 
 namespace CLR
 {
@@ -24,8 +25,10 @@ namespace CLR
     {
         Graphics::Core::DeviceCreateParameters param;
 #if _DEBUG
-        // TODO: Use command arguments
-        param.debugLayerEnabled = true;
+        if (bool debugLayerEnabled = false; CmdLineArg::GetValue(L"gfx-debug", debugLayerEnabled))
+        {
+            param.debugLayerEnabled = debugLayerEnabled;
+        }
 #endif
         mDevice = Graphics::Core::CreateDevice(param);
     }

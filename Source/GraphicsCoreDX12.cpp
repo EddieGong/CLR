@@ -4,6 +4,8 @@ module;
 #include "BasicTypes.h"
 #include "GraphicsCoreDX12.h"
 
+#include "CLRAssert.h"
+
 module CLR.Graphics.Core;
 
 import CLR.Math.Vector;
@@ -45,7 +47,7 @@ namespace CLR::Graphics::Core
     void DestroyDevice(HDevice device)
     {
         // TODO: 
-        ASSERT(false);
+        CLR_ASSERT_MSG(false, "Not finished");
         device;
     }
     
@@ -163,7 +165,7 @@ namespace CLR::Graphics::Core
             D3D_FEATURE_LEVEL_12_0,
         };
 
-        ASSERT(minFeatureLevel == sFeatureLevels[GetArrayLength(sFeatureLevels) - 1], "Min feature level is not matched in the code");
+        CLR_ASSERT_MSG(minFeatureLevel == sFeatureLevels[GetArrayLength(sFeatureLevels) - 1], "Min feature level is not matched in the code");
         D3D12_FEATURE_DATA_FEATURE_LEVELS featureLevels{ static_cast<UINT>(std::size(sFeatureLevels)), sFeatureLevels, minFeatureLevel };
 
         HRESULT hr = d3dDevice->CheckFeatureSupport(D3D12_FEATURE_FEATURE_LEVELS, &featureLevels, sizeof(featureLevels));
@@ -186,7 +188,7 @@ namespace CLR::Graphics::Core
             break;
         }
 
-        ASSERT(internalType != D3D12_COMMAND_LIST_TYPE_NONE, "Can't find correct D3D12 command queue type");
+        CLR_ASSERT_MSG(internalType != D3D12_COMMAND_LIST_TYPE_NONE, "Can't find correct D3D12 command queue type");
         return internalType;
     }
 }

@@ -169,6 +169,7 @@
     </FXCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Source\CLRAssert.h" />
     <ClInclude Include="..\Source\BasicTypes.h" />
     <ClInclude Include="..\Source\GraphicsCoreDX12.h" />
     <ClInclude Include="..\Source\GraphicsCoreTypes.h" />
@@ -182,6 +183,8 @@
     <ClInclude Include="StepTimer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\CmdLineArg.cpp" />
+    <ClCompile Include="..\Source\CmdLineArg.ixx" />
     <ClCompile Include="..\Source\GraphicsCore.ixx" />
     <ClCompile Include="..\Source\GraphicsCoreDX12.cpp" />
     <ClCompile Include="..\Source\Renderer.cpp" />

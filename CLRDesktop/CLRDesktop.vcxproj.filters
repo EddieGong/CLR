@@ -36,6 +36,9 @@
     <ClInclude Include="Headers.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\CLRAssert.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -67,6 +70,12 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Vector.ixx">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CmdLineArg.ixx">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CmdLineArg.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

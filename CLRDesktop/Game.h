@@ -1,6 +1,3 @@
-//
-// Game.h
-//
 
 #pragma once
 

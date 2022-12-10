@@ -1,12 +1,11 @@
-//
-// Game.cpp
-//
 
 #include "Headers.h"
-#include "Game.h"
+#include <shellapi.h>
 
+#include "Game.h"
 #include "Renderer.h"
 
+import CLR.CmdLineArg;
 import CLR.Utils;
 
 using namespace DirectX;
@@ -22,8 +21,11 @@ Game::Game() noexcept(false)
     //   Add DX::DeviceResources::c_ReverseDepth to optimize depth buffer clears for 0 instead of 1.
     m_deviceResources->RegisterDeviceNotify(this);
 
-    // TODO: fetch the screen resolution
+    int argc = 0;
+    wchar_t** argv = CommandLineToArgvW(GetCommandLine(), &argc);
+    CLR::CmdLineArg::Init(argc, argv);
 
+    // TODO: fetch the screen resolution
     mRenderer = std::make_unique<CLR::Renderer>();
 }
 

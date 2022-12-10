@@ -19,7 +19,7 @@ namespace CLR::CmdLineArg
                 {
                     const size_t koffset = 1;
                     const size_t voffset = cmdLineArg.find(L"=");
-                    //ASSERT(voffset != std::npos);
+                    CLR_ASSERT_MSG(voffset != wstring_view::npos, "key=value, symbol '=' is missing");
                     wstring_view key   = cmdLineArg.substr(koffset,     voffset - koffset);
                     wstring_view value = cmdLineArg.substr(voffset + 1);
                     sArgumentMap[key] = value;
