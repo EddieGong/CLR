@@ -7,6 +7,15 @@
     <Filter Include="Source">
       <UniqueIdentifier>{ddfc66a0-5bd3-4e69-a374-3fe4da6f8741}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource\Logos">
+      <UniqueIdentifier>{b9b31414-096f-493f-a70c-71d518c79890}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Configs">
+      <UniqueIdentifier>{d059ec9b-2243-4ba5-ab4c-cf8c411c93d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Lib">
+      <UniqueIdentifier>{02a4312c-5297-452e-a646-bb29a76c2395}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DeviceResources.h">
@@ -39,8 +48,11 @@
     <ClInclude Include="..\Source\CLRAssert.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\inipp.h">
+      <Filter>Source\Lib</Filter>
+    </ClInclude>
     <ClInclude Include="..\Source\json.hpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Lib</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -81,28 +93,36 @@
     <ClCompile Include="..\Source\CmdLineArg.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Settings.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MGCCompile Include="MicrosoftGameConfig.mgc" />
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="GraphicsLogo.png">
-      <Filter>Resource</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="LargeLogo.png">
-      <Filter>Resource</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="SmallLogo.png">
-      <Filter>Resource</Filter>
-    </CopyFileToFolders>
     <CopyFileToFolders Include="SplashScreen.png">
-      <Filter>Resource</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="StoreLogo.png">
       <Filter>Resource</Filter>
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="..\Resource\Configs\Graphics.ini">
+      <Filter>Resource\Configs</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resource\Logos\GraphicsLogo.png">
+      <Filter>Resource\Logos</Filter>
+    </Image>
+    <Image Include="..\Resource\Logos\LargeLogo.png">
+      <Filter>Resource\Logos</Filter>
+    </Image>
+    <Image Include="..\Resource\Logos\SmallLogo.png">
+      <Filter>Resource\Logos</Filter>
+    </Image>
+    <Image Include="..\Resource\Logos\StoreLogo.png">
+      <Filter>Resource\Logos</Filter>
+    </Image>
   </ItemGroup>
 </Project>

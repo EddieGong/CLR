@@ -7,7 +7,7 @@ namespace CLR::Settings
     export class Display
     {
     public:
-        Display() = default;
+        Display();
 
         float GetWidth() const              { return mResolution.Width; }
         float GetHeight() const             { return mResolution.Height; }
