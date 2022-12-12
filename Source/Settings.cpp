@@ -22,5 +22,9 @@ namespace CLR::Settings
 
         mResolution.Width  = static_cast<float>(width);
         mResolution.Height = static_cast<float>(height);
+
+        int fullScreen = 0;
+        inipp::get_value(ini.sections["Default"], "FullScreen", fullScreen);
+        mFullScreen = static_cast<bool>(fullScreen);
     }
 }

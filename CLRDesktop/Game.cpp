@@ -25,7 +25,6 @@ Game::Game() noexcept(false)
     wchar_t** argv = CommandLineToArgvW(GetCommandLine(), &argc);
     CLR::CmdLineArg::Init(argc, argv);
 
-    // TODO: fetch the screen resolution
     mRenderer = std::make_unique<CLR::Renderer>();
 }
 

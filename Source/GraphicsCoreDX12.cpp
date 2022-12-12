@@ -52,9 +52,18 @@ namespace CLR::Graphics::Core
     }
     
     // Command Queue
-    HCommandQueue CreateCommandQueue(CommandQueueType type)
+    HCommandQueue CreateCommandQueue(HDevice device, CommandQueueType type)
     {
-        HCommandQueue queue = nullptr;
+        CommandQueue* queue = new CommandQueue();
+
+        D3D12_COMMAND_QUEUE_DESC queueDesc {};
+        queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
+        queueDesc.Type  = GetInternalCommandQueueType(type);
+
+        ComPtr<ID3D12CommandQueue> commandQueue;
+        ThrowIfFailed(device->D3DDevice->CreateCommandQueue(#queueDesc, IID_PPV_ARGS(commandQueue.ReleaseAndGetAddressOf())));
+
+        queue->D3DCommandQueue = commandQueue.Detach();
         return queue;
     }
 
