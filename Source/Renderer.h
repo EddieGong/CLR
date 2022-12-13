@@ -5,6 +5,8 @@
 
 namespace CLR
 {
+    namespace GCore = Graphics::Core;
+
     class Renderer
     {
     public:
@@ -15,8 +17,13 @@ namespace CLR
         void CreateDeviceIndependentResources();
         void CreateDeviceResources();
 
+        void DestroyDeviceResources();
+
     private:
-        Graphics::Core::HDevice mDevice { nullptr };
+        GCore::HDevice mDevice                      { 0 };
+        GCore::HCommandQueue mGraphicsCommandQueue  { 0 };
+        GCore::HCommandQueue mComputeCommandQueue   { 0 };
+        GCore::HCommandQueue mCopyCommandQueue      { 0 };
 
         // Display device resolution
         Size mDisplaySize;

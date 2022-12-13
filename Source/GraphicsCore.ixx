@@ -7,6 +7,6 @@ export namespace CLR::Graphics::Core
     HDevice CreateDevice(DeviceCreateParameters const& createParams);
     void DestroyDevice(HDevice device);
 
-    HCommandQueue CreateCommandQueue(CommandQueueType type);
+    HCommandQueue CreateCommandQueue(HDevice device, CommandQueueType type);
     void DestroyCommandQueue(HCommandQueue queue);
 }

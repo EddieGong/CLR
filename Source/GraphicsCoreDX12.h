@@ -7,11 +7,13 @@
 
 namespace CLR::Graphics::Core
 {
+    using Microsoft::WRL::ComPtr;
+
     using IDXGIFactoryX = IDXGIFactory6;
 
     struct Device
     {
-		ID3D12Device*           D3DDevice           { nullptr };
+		ComPtr<ID3D12Device>    D3DDevice           { nullptr };
 
         IDXGIFactoryX*          DXGIFactory         { nullptr };
 

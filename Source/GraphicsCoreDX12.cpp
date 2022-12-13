@@ -35,11 +35,11 @@ namespace CLR::Graphics::Core
         ThrowIfFailed(hr);
 
         d3dDevice->SetName(L"D3D12 Device (CLR)");
-        device->D3DDevice = d3dDevice.Detach();
+        device->D3DDevice = d3dDevice;
 
         // TODO: Use ID3D12InfoQueue to configure debug devie?
 
-        device->D3DFeatureLevel = GetMaxSupportedFeatureLevel(device->D3DDevice, device->MinFeatureLevel);
+        device->D3DFeatureLevel = GetMaxSupportedFeatureLevel(device->D3DDevice.Get(), device->MinFeatureLevel);
 
         return device;
     }

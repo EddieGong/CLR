@@ -1,8 +1,7 @@
 
 #include "CppUnitTest.h"
 
-//#include <Vector.h>
-
+import <memory>;
 import <format>;
 import CLR.Utils;
 import CLR.Math.Vector;

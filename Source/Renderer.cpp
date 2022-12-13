@@ -6,6 +6,8 @@ import CLR.CmdLineArg;
 
 namespace CLR
 {
+    namespace GCore = Graphics::Core;
+
     Renderer::Renderer()
     {
         CreateDeviceIndependentResources();
@@ -13,7 +15,7 @@ namespace CLR
     }
     Renderer::~Renderer()
     {
-        Graphics::Core::DestroyDevice(mDevice);
+        DestroyDeviceResources();
     }
 
     void Renderer::CreateDeviceIndependentResources()
@@ -23,13 +25,22 @@ namespace CLR
 
     void Renderer::CreateDeviceResources()
     {
-        Graphics::Core::DeviceCreateParameters param;
+        GCore::DeviceCreateParameters param;
 #if _DEBUG
         if (bool debugLayerEnabled = false; CmdLineArg::GetValue(L"gfx-debug", debugLayerEnabled))
         {
             param.debugLayerEnabled = debugLayerEnabled;
         }
 #endif
-        mDevice = Graphics::Core::CreateDevice(param);
+        mDevice = GCore::CreateDevice(param);
+
+        mGraphicsCommandQueue = GCore::CreateCommandQueue(mDevice, GCore::CommandQueueType::Graphics);
+        mComputeCommandQueue  = GCore::CreateCommandQueue(mDevice, GCore::CommandQueueType::Compute);
+        mCopyCommandQueue     = GCore::CreateCommandQueue(mDevice, GCore::CommandQueueType::Copy);
+    }
+
+    void Renderer::DestroyDeviceResources()
+    {
+        GCore::DestroyDevice(mDevice);
     }
 }
