@@ -61,7 +61,7 @@ namespace CLR::Graphics::Core
         queueDesc.Type  = GetInternalCommandQueueType(type);
 
         ComPtr<ID3D12CommandQueue> commandQueue;
-        ThrowIfFailed(device->D3DDevice->CreateCommandQueue(#queueDesc, IID_PPV_ARGS(commandQueue.ReleaseAndGetAddressOf())));
+        ThrowIfFailed(device->D3DDevice->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(commandQueue.GetAddressOf())));
 
         queue->D3DCommandQueue = commandQueue.Detach();
         return queue;
@@ -69,7 +69,9 @@ namespace CLR::Graphics::Core
 
     void DestroyCommandQueue(HCommandQueue queue)
     {
-
+        // TODO: 
+        CLR_ASSERT_MSG(false, "Not finished");
+        queue;
     }
 
     // Internal functions
