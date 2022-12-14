@@ -2,22 +2,6 @@
 
 namespace CLR::Graphics::Core
 {
-    // Device
-    struct Device;
-
-    struct DeviceCreateParameters
-    {
-        bool debugLayerEnabled  { false };
-        bool useWarpDevice      { false };
-    };
-
-    using HDevice = Device*;
-
-    // Command Queue
-    struct CommandQueue;
-
-    using HCommandQueue = CommandQueue*;
-
     // Misc 
     enum class Option
     {
@@ -33,4 +17,33 @@ namespace CLR::Graphics::Core
         Compute,
         Copy
     };
+
+    enum class SurfaceFormat
+    {
+
+    };
+
+    // Device
+    struct DeviceCreateParameters
+    {
+        bool DebugLayerEnabled  { false };
+        bool UseWarpDevice      { false };
+    };
+
+    struct Device;
+    using HDevice = Device*;
+
+    // Command Queue
+    struct CommandQueue;
+    using HCommandQueue = CommandQueue*;
+
+    // Display
+    struct DisplayCreateParameters
+    {
+        SurfaceFormat BackBufferFormat;
+        SurfaceFormat DepthBufferFormat;
+    };
+
+    struct Display;
+    using HDisplay = Display*;
 }

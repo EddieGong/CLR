@@ -15,27 +15,23 @@ using Microsoft::WRL::ComPtr;
 
 namespace CLR::Graphics::Core
 {
+    static const uint32 sBackBufferCount = 3;
+
     HDevice CreateDevice(DeviceCreateParameters const& createParams)
     {       
         Device* device = new Device();
 
-        EnableDebugLayer(device, createParams.debugLayerEnabled);
+        EnableDebugLayer(device, createParams.DebugLayerEnabled);
 
-        ComPtr<IDXGIFactoryX> dxgiFactory;
-        ThrowIfFailed(CreateDXGIFactory2(device->DXGIFactoryFlags, IID_PPV_ARGS(dxgiFactory.GetAddressOf())));
-        device->DXGIFactory = dxgiFactory.Get();
-
-        CheckVariableRefreshRateSupport(device->DXGIFactory, device->Options);
+        ThrowIfFailed(CreateDXGIFactory2(device->DXGIFactoryFlags, IID_PPV_ARGS(device->DXGIFactory.ReleaseAndGetAddressOf())));
+        CheckVariableRefreshRateSupport(device->DXGIFactory.Get(), device->Options);
 
         ComPtr<IDXGIAdapter1> dxgiAdapter;
-        GetAdapter(device->DXGIFactory, *dxgiAdapter.GetAddressOf(), device->MinFeatureLevel);
+        GetAdapter(device->DXGIFactory.Get(), *dxgiAdapter.GetAddressOf(), device->MinFeatureLevel);
 
-        ComPtr<ID3D12Device> d3dDevice;
-        HRESULT hr = D3D12CreateDevice(dxgiAdapter.Get(), device->MinFeatureLevel, IID_PPV_ARGS(d3dDevice.GetAddressOf()));
+        HRESULT hr = D3D12CreateDevice(dxgiAdapter.Get(), device->MinFeatureLevel, IID_PPV_ARGS(device->D3DDevice.ReleaseAndGetAddressOf()));
         ThrowIfFailed(hr);
-
-        d3dDevice->SetName(L"D3D12 Device (CLR)");
-        device->D3DDevice = d3dDevice;
+        device->D3DDevice->SetName(L"D3D12 Device (CLR)");
 
         // TODO: Use ID3D12InfoQueue to configure debug devie?
 
@@ -46,9 +42,7 @@ namespace CLR::Graphics::Core
 
     void DestroyDevice(HDevice device)
     {
-        // TODO: 
-        CLR_ASSERT_MSG(false, "Not finished");
-        device;
+        delete device;
     }
     
     // Command Queue
@@ -60,18 +54,32 @@ namespace CLR::Graphics::Core
         queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
         queueDesc.Type  = GetInternalCommandQueueType(type);
 
-        ComPtr<ID3D12CommandQueue> commandQueue;
-        ThrowIfFailed(device->D3DDevice->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(commandQueue.GetAddressOf())));
-
-        queue->D3DCommandQueue = commandQueue.Detach();
+        ThrowIfFailed(device->D3DDevice->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(queue->D3DCommandQueue.ReleaseAndGetAddressOf())));
         return queue;
     }
 
     void DestroyCommandQueue(HCommandQueue queue)
     {
-        // TODO: 
-        CLR_ASSERT_MSG(false, "Not finished");
-        queue;
+        delete queue;
+    }
+
+    // Display
+    HDisplay CreateDisplay(HDevice device)
+    {
+        Display* display = new Display();
+
+        D3D12_DESCRIPTOR_HEAP_DESC rtvDescriptorHeapDesc {};
+        rtvDescriptorHeapDesc.NumDescriptors = sBackBufferCount;
+        rtvDescriptorHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
+
+        ThrowIfFailed(device->D3DDevice->CreateDescriptorHeap(&rtvDescriptorHeapDesc, IID_PPV_ARGS(display->DescriptorHeap.ReleaseAndGetAddressOf())));
+
+        return display;
+    }
+
+    void DestroyDisplay(HDisplay display)
+    {
+        delete display;
     }
 
     // Internal functions

@@ -29,7 +29,7 @@ namespace CLR
 #if _DEBUG
         if (bool debugLayerEnabled = false; CmdLineArg::GetValue(L"gfx-debug", debugLayerEnabled))
         {
-            param.debugLayerEnabled = debugLayerEnabled;
+            param.DebugLayerEnabled = debugLayerEnabled;
         }
 #endif
         mDevice = GCore::CreateDevice(param);
@@ -41,6 +41,10 @@ namespace CLR
 
     void Renderer::DestroyDeviceResources()
     {
+        GCore::DestroyCommandQueue(mGraphicsCommandQueue);
+        GCore::DestroyCommandQueue(mComputeCommandQueue);
+        GCore::DestroyCommandQueue(mCopyCommandQueue);
+
         GCore::DestroyDevice(mDevice);
     }
 }

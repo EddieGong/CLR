@@ -15,7 +15,7 @@ namespace CLR::Graphics::Core
     {
 		ComPtr<ID3D12Device>    D3DDevice           { nullptr };
 
-        IDXGIFactoryX*          DXGIFactory         { nullptr };
+        ComPtr<IDXGIFactoryX>   DXGIFactory         { nullptr };
 
         DeviceCreateParameters  CreateParams;
 
@@ -30,8 +30,16 @@ namespace CLR::Graphics::Core
 
     struct CommandQueue
     {
-        ID3D12CommandQueue*     D3DCommandQueue     { nullptr };
-        D3D12_COMMAND_LIST_TYPE Type                { D3D12_COMMAND_LIST_TYPE_NONE };
+        ComPtr<ID3D12CommandQueue>  D3DCommandQueue     { nullptr };
+        D3D12_COMMAND_LIST_TYPE     Type                { D3D12_COMMAND_LIST_TYPE_NONE };
+    };
+
+    struct Display
+    {
+        ComPtr<ID3D12DescriptorHeap>    DescriptorHeap      { nullptr };
+        uint32_t                        DescriptorSize      { 0 };
+        DXGI_FORMAT                     BackBufferFormat    { DXGI_FORMAT_UNKNOWN };
+        DXGI_FORMAT                     DepthBufferFormat   { DXGI_FORMAT_UNKNOWN };
     };
 
 
