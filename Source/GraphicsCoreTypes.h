@@ -20,7 +20,7 @@ namespace CLR::Graphics::Core
 
     enum class SurfaceFormat
     {
-
+        UNKNOWN = 0
     };
 
     // Device
@@ -40,8 +40,8 @@ namespace CLR::Graphics::Core
     // Display
     struct DisplayCreateParameters
     {
-        SurfaceFormat BackBufferFormat;
-        SurfaceFormat DepthBufferFormat;
+        SurfaceFormat BackBufferFormat { SurfaceFormat::UNKNOWN };
+        SurfaceFormat DepthBufferFormat{ SurfaceFormat::UNKNOWN };
     };
 
     struct Display;

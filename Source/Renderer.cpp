@@ -25,22 +25,33 @@ namespace CLR
 
     void Renderer::CreateDeviceResources()
     {
-        GCore::DeviceCreateParameters param;
-#if _DEBUG
-        if (bool debugLayerEnabled = false; CmdLineArg::GetValue(L"gfx-debug", debugLayerEnabled))
         {
-            param.DebugLayerEnabled = debugLayerEnabled;
-        }
+            GCore::DeviceCreateParameters param;
+#if _DEBUG
+            if (bool debugLayerEnabled = false; CmdLineArg::GetValue(L"gfx-debug", debugLayerEnabled))
+            {
+                param.DebugLayerEnabled = debugLayerEnabled;
+            }
 #endif
-        mDevice = GCore::CreateDevice(param);
+            mDevice = GCore::CreateDevice(param);
+        }
 
-        mGraphicsCommandQueue = GCore::CreateCommandQueue(mDevice, GCore::CommandQueueType::Graphics);
-        mComputeCommandQueue  = GCore::CreateCommandQueue(mDevice, GCore::CommandQueueType::Compute);
-        mCopyCommandQueue     = GCore::CreateCommandQueue(mDevice, GCore::CommandQueueType::Copy);
+        {
+            mGraphicsCommandQueue = GCore::CreateCommandQueue(mDevice, GCore::CommandQueueType::Graphics);
+            mComputeCommandQueue  = GCore::CreateCommandQueue(mDevice, GCore::CommandQueueType::Compute);
+            mCopyCommandQueue     = GCore::CreateCommandQueue(mDevice, GCore::CommandQueueType::Copy);   
+        }
+
+        {
+            GCore::DisplayCreateParameters params{};
+            mDisplay = GCore::CreateDisplay(mDevice, params);
+        }
     }
 
     void Renderer::DestroyDeviceResources()
     {
+        GCore::DestroyDisplay(mDisplay);
+
         GCore::DestroyCommandQueue(mGraphicsCommandQueue);
         GCore::DestroyCommandQueue(mComputeCommandQueue);
         GCore::DestroyCommandQueue(mCopyCommandQueue);

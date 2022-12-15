@@ -36,7 +36,8 @@ namespace CLR::Graphics::Core
 
     struct Display
     {
-        ComPtr<ID3D12DescriptorHeap>    DescriptorHeap      { nullptr };
+        ComPtr<ID3D12DescriptorHeap>    DescriptorHeapRTV   { nullptr };
+        ComPtr<ID3D12DescriptorHeap>    DescriptorHeapDSV   { nullptr };
         uint32_t                        DescriptorSize      { 0 };
         DXGI_FORMAT                     BackBufferFormat    { DXGI_FORMAT_UNKNOWN };
         DXGI_FORMAT                     DepthBufferFormat   { DXGI_FORMAT_UNKNOWN };

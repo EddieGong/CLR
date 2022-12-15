@@ -24,6 +24,7 @@ namespace CLR
         GCore::HCommandQueue mGraphicsCommandQueue  { 0 };
         GCore::HCommandQueue mComputeCommandQueue   { 0 };
         GCore::HCommandQueue mCopyCommandQueue      { 0 };
+        GCore::HDisplay mDisplay                    { 0 };
 
         // Display device resolution
         Size mDisplaySize;

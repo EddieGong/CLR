@@ -64,15 +64,27 @@ namespace CLR::Graphics::Core
     }
 
     // Display
-    HDisplay CreateDisplay(HDevice device)
+    HDisplay CreateDisplay(HDevice device, DisplayCreateParameters const& createParams)
     {
         Display* display = new Display();
 
-        D3D12_DESCRIPTOR_HEAP_DESC rtvDescriptorHeapDesc {};
-        rtvDescriptorHeapDesc.NumDescriptors = sBackBufferCount;
-        rtvDescriptorHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
+        D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDescRTV {};
+        descriptorHeapDescRTV.NumDescriptors = sBackBufferCount;
+        descriptorHeapDescRTV.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 
-        ThrowIfFailed(device->D3DDevice->CreateDescriptorHeap(&rtvDescriptorHeapDesc, IID_PPV_ARGS(display->DescriptorHeap.ReleaseAndGetAddressOf())));
+        ThrowIfFailed(device->D3DDevice->CreateDescriptorHeap(&descriptorHeapDescRTV, IID_PPV_ARGS(display->DescriptorHeapRTV.ReleaseAndGetAddressOf())));
+        display->DescriptorHeapRTV->SetName(L"Display Descriptor Heap RTV");
+        display->DescriptorSize = device->D3DDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+
+        if (createParams.DepthBufferFormat != SurfaceFormat::UNKNOWN)
+        {
+            D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDescDSV {};
+            descriptorHeapDescDSV.NumDescriptors = 1;
+            descriptorHeapDescDSV.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
+
+            ThrowIfFailed(device->D3DDevice->CreateDescriptorHeap(&descriptorHeapDescDSV, IID_PPV_ARGS(display->DescriptorHeapDSV.ReleaseAndGetAddressOf())));
+            display->DescriptorHeapDSV->SetName(L"Display Descriptor Heap DSV");
+        }
 
         return display;
     }

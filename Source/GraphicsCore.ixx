@@ -10,6 +10,6 @@ export namespace CLR::Graphics::Core
     HCommandQueue CreateCommandQueue(HDevice device, CommandQueueType type);
     void DestroyCommandQueue(HCommandQueue queue);
 
-    HDisplay CreateDisplay(HDevice device);
+    HDisplay CreateDisplay(HDevice device, DisplayCreateParameters const& createParams);
     void DestroyDisplay(HDisplay display);
 }
