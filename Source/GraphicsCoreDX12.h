@@ -11,36 +11,51 @@ namespace CLR::Graphics::Core
 
     using IDXGIFactoryX = IDXGIFactory6;
 
+    static const uint32 sBackBufferCount = 3;
+
+
+    // Device
     struct Device
     {
-		ComPtr<ID3D12Device>    D3DDevice           { nullptr };
+		ComPtr<ID3D12Device>    D3DDevice                                   { 0 };
 
-        ComPtr<IDXGIFactoryX>   DXGIFactory         { nullptr };
+        ComPtr<IDXGIFactoryX>   DXGIFactory                                 { 0 };
 
         DeviceCreateParameters  CreateParams;
 
-        D3D_FEATURE_LEVEL       MinFeatureLevel     { D3D_FEATURE_LEVEL_12_0 };
+        D3D_FEATURE_LEVEL       MinFeatureLevel                             { D3D_FEATURE_LEVEL_12_0 };
 
         // Cached device properties
-		DWORD                   DXGIFactoryFlags    { 0 };
-        D3D_FEATURE_LEVEL       D3DFeatureLevel     { MinFeatureLevel };
+		DWORD                   DXGIFactoryFlags                            { 0 };
+        D3D_FEATURE_LEVEL       D3DFeatureLevel                             { MinFeatureLevel };
 
-        uint32_t                Options             { (uint32_t)Option::All };
+        uint32_t                Options                                     { (uint32_t)Option::All };
     };
 
-    struct CommandQueue
-    {
-        ComPtr<ID3D12CommandQueue>  D3DCommandQueue     { nullptr };
-        D3D12_COMMAND_LIST_TYPE     Type                { D3D12_COMMAND_LIST_TYPE_NONE };
-    };
 
+    // Display
     struct Display
     {
-        ComPtr<ID3D12DescriptorHeap>    DescriptorHeapRTV   { nullptr };
-        ComPtr<ID3D12DescriptorHeap>    DescriptorHeapDSV   { nullptr };
+        ComPtr<ID3D12DescriptorHeap>    DescriptorHeapRTV   { 0 };
+        ComPtr<ID3D12DescriptorHeap>    DescriptorHeapDSV   { 0 };
         uint32_t                        DescriptorSize      { 0 };
         DXGI_FORMAT                     BackBufferFormat    { DXGI_FORMAT_UNKNOWN };
         DXGI_FORMAT                     DepthBufferFormat   { DXGI_FORMAT_UNKNOWN };
+    };
+
+
+    // Command
+    struct CommandQueue
+    {
+        ComPtr<ID3D12CommandQueue>  D3DCommandQueue{ 0 };
+        D3D12_COMMAND_LIST_TYPE     Type{ D3D12_COMMAND_LIST_TYPE_NONE };
+    };
+
+    struct CommandList
+    {
+        ComPtr<ID3D12CommandAllocator>  Allocator   { 0 };
+        ComPtr<ID3D12CommandList>       List        { 0 };
+        D3D12_COMMAND_LIST_TYPE         Type        { D3D12_COMMAND_LIST_TYPE_NONE };
     };
 
 

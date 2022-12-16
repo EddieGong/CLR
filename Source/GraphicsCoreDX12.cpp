@@ -15,8 +15,6 @@ using Microsoft::WRL::ComPtr;
 
 namespace CLR::Graphics::Core
 {
-    static const uint32 sBackBufferCount = 3;
-
     HDevice CreateDevice(DeviceCreateParameters const& createParams)
     {       
         Device* device = new Device();

@@ -15,13 +15,15 @@ namespace CLR::Graphics::Core
     {
         Graphics,
         Compute,
-        Copy
+        Copy,
+        Count
     };
 
     enum class SurfaceFormat
     {
         UNKNOWN = 0
     };
+
 
     // Device
     struct DeviceCreateParameters
@@ -33,9 +35,14 @@ namespace CLR::Graphics::Core
     struct Device;
     using HDevice = Device*;
 
-    // Command Queue
+
+    // Command
     struct CommandQueue;
     using HCommandQueue = CommandQueue*;
+
+    struct CommandList;
+    using HCommandList = CommandList*;
+
 
     // Display
     struct DisplayCreateParameters
