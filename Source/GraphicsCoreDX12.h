@@ -68,5 +68,5 @@ namespace CLR::Graphics::Core
 
     D3D_FEATURE_LEVEL GetMaxSupportedFeatureLevel(ID3D12Device* d3dDevice, D3D_FEATURE_LEVEL minFeatureLevel);
 
-    D3D12_COMMAND_LIST_TYPE GetInternalCommandQueueType(CommandQueueType type);
+    D3D12_COMMAND_LIST_TYPE GetInternalCommandListType(CommandListType type);
 }

@@ -37,9 +37,9 @@ namespace CLR
         }
 
         {
-            mGraphicsCommandQueue = GCore::CreateCommandQueue(mDevice, GCore::CommandQueueType::Graphics);
-            mComputeCommandQueue  = GCore::CreateCommandQueue(mDevice, GCore::CommandQueueType::Compute);
-            mCopyCommandQueue     = GCore::CreateCommandQueue(mDevice, GCore::CommandQueueType::Copy);   
+            mGraphicsCommandQueue = GCore::CreateCommandQueue(mDevice, GCore::CommandListType::Graphics);
+            mComputeCommandQueue  = GCore::CreateCommandQueue(mDevice, GCore::CommandListType::Compute);
+            mCopyCommandQueue     = GCore::CreateCommandQueue(mDevice, GCore::CommandListType::Copy);   
         }
 
         {

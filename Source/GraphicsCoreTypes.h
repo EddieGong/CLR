@@ -11,7 +11,7 @@ namespace CLR::Graphics::Core
         All             = AllowTearing | EnableHDR | ReverseDepth,
     };
 
-    enum class CommandQueueType
+    enum class CommandListType
     {
         Graphics,
         Compute,
@@ -47,8 +47,8 @@ namespace CLR::Graphics::Core
     // Display
     struct DisplayCreateParameters
     {
-        SurfaceFormat BackBufferFormat { SurfaceFormat::UNKNOWN };
-        SurfaceFormat DepthBufferFormat{ SurfaceFormat::UNKNOWN };
+        SurfaceFormat BackBufferFormat  { SurfaceFormat::UNKNOWN };
+        SurfaceFormat DepthBufferFormat { SurfaceFormat::UNKNOWN };
     };
 
     struct Display;

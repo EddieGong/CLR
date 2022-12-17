@@ -43,23 +43,6 @@ namespace CLR::Graphics::Core
         delete device;
     }
     
-    // Command Queue
-    HCommandQueue CreateCommandQueue(HDevice device, CommandQueueType type)
-    {
-        CommandQueue* queue = new CommandQueue();
-
-        D3D12_COMMAND_QUEUE_DESC queueDesc {};
-        queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
-        queueDesc.Type  = GetInternalCommandQueueType(type);
-
-        ThrowIfFailed(device->D3DDevice->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(queue->D3DCommandQueue.ReleaseAndGetAddressOf())));
-        return queue;
-    }
-
-    void DestroyCommandQueue(HCommandQueue queue)
-    {
-        delete queue;
-    }
 
     // Display
     HDisplay CreateDisplay(HDevice device, DisplayCreateParameters const& createParams)
@@ -91,6 +74,38 @@ namespace CLR::Graphics::Core
     {
         delete display;
     }
+
+
+    // Command
+    HCommandQueue CreateCommandQueue(HDevice device, CommandListType type)
+    {
+        CommandQueue* queue = new CommandQueue();
+
+        D3D12_COMMAND_QUEUE_DESC queueDesc{};
+        queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
+        queueDesc.Type = GetInternalCommandListType(type);
+
+        ThrowIfFailed(device->D3DDevice->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(queue->D3DCommandQueue.ReleaseAndGetAddressOf())));
+        return queue;
+    }
+
+    void DestroyCommandQueue(HCommandQueue queue)
+    {
+        delete queue;
+    }
+
+    HCommandList CreateCommandList(HDevice device)
+    {
+        CommandList* commandList = new CommandList;
+
+        return commandList;
+    }
+
+    void DestroyCommandList(HCommandList commandList)
+    {
+        delete commandList;
+    }
+
 
     // Internal functions
 
@@ -201,18 +216,18 @@ namespace CLR::Graphics::Core
         return SUCCEEDED(hr) ? featureLevels.MaxSupportedFeatureLevel : minFeatureLevel;
     }
 
-    D3D12_COMMAND_LIST_TYPE GetInternalCommandQueueType(CommandQueueType type)
+    D3D12_COMMAND_LIST_TYPE GetInternalCommandListType(CommandListType type)
     {
         D3D12_COMMAND_LIST_TYPE internalType = D3D12_COMMAND_LIST_TYPE_NONE;
         switch (type)
         {
-        case CLR::Graphics::Core::CommandQueueType::Graphics:
+        case CLR::Graphics::Core::CommandListType::Graphics:
             internalType = D3D12_COMMAND_LIST_TYPE_DIRECT;
             break;
-        case CLR::Graphics::Core::CommandQueueType::Compute:
+        case CLR::Graphics::Core::CommandListType::Compute:
             internalType = D3D12_COMMAND_LIST_TYPE_COMPUTE;
             break;
-        case CLR::Graphics::Core::CommandQueueType::Copy:
+        case CLR::Graphics::Core::CommandListType::Copy:
             internalType = D3D12_COMMAND_LIST_TYPE_COPY;
             break;
         }
