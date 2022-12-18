@@ -37,12 +37,6 @@ namespace CLR
         }
 
         {
-            mGraphicsCommandQueue = GCore::CreateCommandQueue(mDevice, GCore::CommandListType::Graphics);
-            mComputeCommandQueue  = GCore::CreateCommandQueue(mDevice, GCore::CommandListType::Compute);
-            mCopyCommandQueue     = GCore::CreateCommandQueue(mDevice, GCore::CommandListType::Copy);   
-        }
-
-        {
             GCore::DisplayCreateParameters params{};
             mDisplay = GCore::CreateDisplay(mDevice, params);
         }
@@ -51,10 +45,6 @@ namespace CLR
     void Renderer::DestroyDeviceResources()
     {
         GCore::DestroyDisplay(mDisplay);
-
-        GCore::DestroyCommandQueue(mGraphicsCommandQueue);
-        GCore::DestroyCommandQueue(mComputeCommandQueue);
-        GCore::DestroyCommandQueue(mCopyCommandQueue);
 
         GCore::DestroyDevice(mDevice);
     }

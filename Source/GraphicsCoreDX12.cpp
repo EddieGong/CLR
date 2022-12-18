@@ -1,5 +1,8 @@
 module;
 
+// TONOTE: Can't use "import <array>;" becasue of warnings. The modules implementation is still experimental, hopefully, it will be fixed in the future.
+#include <array>
+
 #include "Headers.h"
 #include "BasicTypes.h"
 #include "GraphicsCoreDX12.h"
@@ -15,6 +18,9 @@ using Microsoft::WRL::ComPtr;
 
 namespace CLR::Graphics::Core
 {
+    std::unique_ptr<CommandQueue> sCommandQueues[int32(CommandListType::Count)];
+
+
     HDevice CreateDevice(DeviceCreateParameters const& createParams)
     {       
         Device* device = new Device();
@@ -34,6 +40,13 @@ namespace CLR::Graphics::Core
         // TODO: Use ID3D12InfoQueue to configure debug devie?
 
         device->D3DFeatureLevel = GetMaxSupportedFeatureLevel(device->D3DDevice.Get(), device->MinFeatureLevel);
+
+        std::array<CommandListType, size_t(CommandListType::Count)> commandListTypes = { CommandListType::Graphics, CommandListType::Compute, CommandListType::Copy };
+        for (auto type : commandListTypes)
+        {
+            sCommandQueues[size_t(type)] = std::make_unique<CommandQueue>();
+            CreateCommandQueue(device, sCommandQueues[size_t(type)].get(), type);
+        }
 
         return device;
     }
@@ -77,16 +90,13 @@ namespace CLR::Graphics::Core
 
 
     // Command
-    HCommandQueue CreateCommandQueue(HDevice device, CommandListType type)
+    void CreateCommandQueue(HDevice device, HCommandQueue queue, CommandListType type)
     {
-        CommandQueue* queue = new CommandQueue();
-
         D3D12_COMMAND_QUEUE_DESC queueDesc{};
         queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
         queueDesc.Type = GetInternalCommandListType(type);
 
         ThrowIfFailed(device->D3DDevice->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(queue->D3DCommandQueue.ReleaseAndGetAddressOf())));
-        return queue;
     }
 
     void DestroyCommandQueue(HCommandQueue queue)
