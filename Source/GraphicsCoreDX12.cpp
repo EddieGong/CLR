@@ -18,12 +18,15 @@ using Microsoft::WRL::ComPtr;
 
 namespace CLR::Graphics::Core
 {
+    std::unique_ptr<Device>       sDevice;
     std::unique_ptr<CommandQueue> sCommandQueues[int32(CommandListType::Count)];
+    std::unique_ptr<Display>      sDisplay;
 
 
     HDevice CreateDevice(DeviceCreateParameters const& createParams)
     {       
-        Device* device = new Device();
+        sDevice = std::make_unique<Device>();
+        Device* device = sDevice.get();
 
         EnableDebugLayer(device, createParams.DebugLayerEnabled);
 
@@ -53,14 +56,16 @@ namespace CLR::Graphics::Core
 
     void DestroyDevice(HDevice device)
     {
-        delete device;
+        CLR_ASSERT(device == sDevice.get());
+        sDevice.reset();
     }
     
 
     // Display
     HDisplay CreateDisplay(HDevice device, DisplayCreateParameters const& createParams)
     {
-        Display* display = new Display();
+        sDisplay = std::make_unique<Display>();
+        Display* display = sDisplay.get();
 
         D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDescRTV {};
         descriptorHeapDescRTV.NumDescriptors = sBackBufferCount;
@@ -85,7 +90,8 @@ namespace CLR::Graphics::Core
 
     void DestroyDisplay(HDisplay display)
     {
-        delete display;
+        CLR_ASSERT(display == sDisplay.get());
+        sDisplay.reset();
     }
 
 
