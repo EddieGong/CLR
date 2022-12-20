@@ -9,7 +9,8 @@ namespace CLR::Graphics::Core
 {
     using Microsoft::WRL::ComPtr;
 
-    using IDXGIFactoryX = IDXGIFactory6;
+    using IDXGIFactoryX              = IDXGIFactory6;
+    using ID3D12GraphicsCommandListX = ID3D12GraphicsCommandList5;
 
     static const uint32 sBackBufferCount = 3;
 
@@ -55,7 +56,7 @@ namespace CLR::Graphics::Core
     {
         ComPtr<ID3D12CommandAllocator>      Allocators[sBackBufferCount]    { 0, 0, 0 };
         // TODO: Check if there is another d3d12 command list type or if it is more beneficial to using the last command list type
-        ComPtr<ID3D12GraphicsCommandList>   List                            { 0 };
+        ComPtr<ID3D12GraphicsCommandListX>  List                            { 0 };
         D3D12_COMMAND_LIST_TYPE             Type                            { D3D12_COMMAND_LIST_TYPE_NONE };
     };
 
