@@ -10,7 +10,7 @@ namespace CLR::Graphics::Core
     export HDisplay CreateDisplay(HDevice device, DisplayCreateParameters const& createParams);
     export void DestroyDisplay(HDisplay display);
 
-    export HCommandList CreateCommandList(HDevice device, CommandListType type);
+    export HCommandList CreateCommandList(HDevice device, CommandListCreateParameters const& createParams);
     export void DestroyCommandList(HCommandList commandList);
 
     // TODO: 

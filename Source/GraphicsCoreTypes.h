@@ -37,12 +37,17 @@ namespace CLR::Graphics::Core
 
 
     // Command
+    struct CommandListCreateParameters
+    {
+        CommandListType Type { CommandListType::Count };
+        wchar_t*        Name { nullptr };
+    };
+
     struct CommandQueue;
     using HCommandQueue = CommandQueue*;
 
     struct CommandList;
     using HCommandList = CommandList*;
-
 
     // Display
     struct DisplayCreateParameters

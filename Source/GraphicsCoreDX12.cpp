@@ -22,6 +22,12 @@ namespace CLR::Graphics::Core
     std::unique_ptr<CommandQueue> sCommandQueues[int32(CommandListType::Count)];
     std::unique_ptr<Display>      sDisplay;
 
+    template<typename T>
+    void SetName(T obj, wchar_t* name)
+    {
+        obj->SetName(name == nullptr ? L"NULL" : name);
+    }
+
 
     HDevice CreateDevice(DeviceCreateParameters const& createParams)
     {       
@@ -110,15 +116,29 @@ namespace CLR::Graphics::Core
         delete queue;
     }
 
-    HCommandList CreateCommandList(HDevice device)
+    HCommandList CreateCommandList(HDevice device, CommandListCreateParameters const& createParams)
     {
         CommandList* commandList = new CommandList;
+
+        const D3D12_COMMAND_LIST_TYPE listType = GetInternalCommandListType(createParams.Type);
+
+        for (uint32 i = 0; i < sBackBufferCount; ++i)
+        {
+            ThrowIfFailed(device->D3DDevice->CreateCommandAllocator(listType, IID_PPV_ARGS(commandList->Allocators[i].ReleaseAndGetAddressOf())));
+            //SetName(commandList->Allocator[i], createParams.Name);
+        }
+
+        ThrowIfFailed(device->D3DDevice->CreateCommandList(0, listType, commandList->Allocators[0].Get(), nullptr, IID_PPV_ARGS(commandList->List.ReleaseAndGetAddressOf())));
+        ThrowIfFailed(commandList->List->Close());
+
+        SetName(commandList->List, createParams.Name);
 
         return commandList;
     }
 
     void DestroyCommandList(HCommandList commandList)
     {
+        // TODO: RAII?
         delete commandList;
     }
 
