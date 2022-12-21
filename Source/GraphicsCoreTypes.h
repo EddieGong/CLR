@@ -58,4 +58,8 @@ namespace CLR::Graphics::Core
 
     struct Display;
     using HDisplay = Display*;
+
+    // Fence
+    struct Fence;
+    using HFence = Fence*;
 }

@@ -36,6 +36,7 @@ namespace CLR
         HRESULT result;
     };
 
+    // TODO: Is exception necessary? Is it handled somewhere?
     // Helper utility converts D3D API failures into exceptions.
     void ThrowIfFailed(HRESULT hr)
     {

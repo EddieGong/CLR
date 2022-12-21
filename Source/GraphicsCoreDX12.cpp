@@ -143,6 +143,20 @@ namespace CLR::Graphics::Core
     }
 
 
+    // Fence
+    HFence CreateFence(HDevice device)
+    {
+        Fence* fence = new Fence();
+
+        ThrowIfFailed(device->D3DDevice->CreateFence(fence->Value, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(fence->D3DFence.ReleaseAndGetAddressOf())));
+        // TODO: SetName
+    }
+
+    void DestroyFence(HFence fence)
+    {
+    
+    }
+
     // Internal functions
 
     void EnableDebugLayer(Device* device, bool debugLayerEnabled)

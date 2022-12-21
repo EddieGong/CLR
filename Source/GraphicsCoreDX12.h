@@ -11,6 +11,8 @@ namespace CLR::Graphics::Core
 
     using IDXGIFactoryX              = IDXGIFactory6;
     using ID3D12GraphicsCommandListX = ID3D12GraphicsCommandList5;
+    using IDXGUISwapChainX           = IDXGISwapChain4;
+    using ID3D12FenceX               = ID3D12Fence1;
 
     static const uint32 sBackBufferCount = 3;
 
@@ -37,6 +39,7 @@ namespace CLR::Graphics::Core
     // Display
     struct Display
     {
+        ComPtr<IDXGUISwapChainX>        SwapChain           { 0 };
         ComPtr<ID3D12DescriptorHeap>    DescriptorHeapRTV   { 0 };
         ComPtr<ID3D12DescriptorHeap>    DescriptorHeapDSV   { 0 };
         uint32_t                        DescriptorSize      { 0 };
@@ -60,6 +63,13 @@ namespace CLR::Graphics::Core
         D3D12_COMMAND_LIST_TYPE             Type                            { D3D12_COMMAND_LIST_TYPE_NONE };
     };
 
+
+    // Fence
+    struct Fence
+    {
+        ComPtr<ID3D12FenceX> D3DFence   { 0 };
+        uint64_t             Value      { 0 };
+    };
 
     // Internal functions
     void EnableDebugLayer(Device* device, bool debugLayerEnabled);

@@ -13,7 +13,10 @@ namespace CLR::Graphics::Core
     export HCommandList CreateCommandList(HDevice device, CommandListCreateParameters const& createParams);
     export void DestroyCommandList(HCommandList commandList);
 
-    // TODO: 
+    // TODO: Export or not?
     void CreateCommandQueue(HDevice device, HCommandQueue queue, CommandListType type);
     void DestroyCommandQueue(HCommandQueue queue);
+
+    HFence CreateFence(HDevice device);
+    void DestroyFence(HFence fence);
 }
