@@ -15,6 +15,7 @@ import CLR.Math.Vector;
 import CLR.Utils;
 
 using Microsoft::WRL::ComPtr;
+using EventWrapper = Microsoft::WRL::Wrappers::Event;
 
 namespace CLR::Graphics::Core
 {
@@ -22,11 +23,7 @@ namespace CLR::Graphics::Core
     std::unique_ptr<CommandQueue> sCommandQueues[int32(CommandListType::Count)];
     std::unique_ptr<Display>      sDisplay;
 
-    template<typename T>
-    void SetName(T obj, wchar_t* name)
-    {
-        obj->SetName(name == nullptr ? L"NULL" : name);
-    }
+    EventWrapper sFenceEvent;
 
 
     HDevice CreateDevice(DeviceCreateParameters const& createParams)
@@ -56,6 +53,10 @@ namespace CLR::Graphics::Core
             sCommandQueues[size_t(type)] = std::make_unique<CommandQueue>();
             CreateCommandQueue(device, sCommandQueues[size_t(type)].get(), type);
         }
+
+        // TODO: Move it out of CreateDevice function
+        sFenceEvent.Attach(CreateEventEx(nullptr, nullptr, 0, EVENT_MODIFY_STATE | SYNCHRONIZE));
+        CLR_ASSERT_MSG(sFenceEvent.IsValid(), "CreateEventEx fails");
 
         return device;
     }
@@ -150,12 +151,22 @@ namespace CLR::Graphics::Core
 
         ThrowIfFailed(device->D3DDevice->CreateFence(fence->Value, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(fence->D3DFence.ReleaseAndGetAddressOf())));
         // TODO: SetName
+
+        return fence;
     }
 
     void DestroyFence(HFence fence)
     {
-    
+        delete fence;
     }
+
+    void WaitForGpuToFinish()
+    {
+        if (sCommandQueues[int(CommandListType::Graphics)])
+        {
+        }
+    }
+
 
     // Internal functions
 

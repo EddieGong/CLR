@@ -81,4 +81,10 @@ namespace CLR::Graphics::Core
     D3D_FEATURE_LEVEL GetMaxSupportedFeatureLevel(ID3D12Device* d3dDevice, D3D_FEATURE_LEVEL minFeatureLevel);
 
     D3D12_COMMAND_LIST_TYPE GetInternalCommandListType(CommandListType type);
+
+    template<typename T>
+    void SetName(T obj, wchar_t* name)
+    {
+        obj->SetName(name == nullptr ? L"NULL" : name);
+    }
 }
