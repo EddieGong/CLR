@@ -19,12 +19,14 @@ using EventWrapper = Microsoft::WRL::Wrappers::Event;
 
 namespace CLR::Graphics::Core
 {
-    std::unique_ptr<Device>       sDevice;
-    std::unique_ptr<CommandQueue> sCommandQueues[int32(CommandListType::Count)];
-    std::unique_ptr<Display>      sDisplay;
+    std::unique_ptr<Device>         sDevice;
+    std::unique_ptr<CommandQueue>   sCommandQueues[int32(CommandListType::Count)];
+    std::unique_ptr<Display>        sDisplay;
 
-    EventWrapper sFenceEvent;
+    EventWrapper                    sFenceEvent;
+    std::unique_ptr<Fence>          sFence;
 
+    uint32                          sBackBufferIndex { 0 };
 
     HDevice CreateDevice(DeviceCreateParameters const& createParams)
     {       
@@ -55,6 +57,10 @@ namespace CLR::Graphics::Core
         }
 
         // TODO: Move it out of CreateDevice function
+        sFence = std::make_unique<Fence>();
+        ThrowIfFailed(device->D3DDevice->CreateFence(sFence->Value, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(sFence->D3DFence.ReleaseAndGetAddressOf())));
+        sFence->Value++;
+
         sFenceEvent.Attach(CreateEventEx(nullptr, nullptr, 0, EVENT_MODIFY_STATE | SYNCHRONIZE));
         CLR_ASSERT_MSG(sFenceEvent.IsValid(), "CreateEventEx fails");
 
@@ -160,10 +166,19 @@ namespace CLR::Graphics::Core
         delete fence;
     }
 
-    void WaitForGpuToFinish()
+    void WaitForGpuToFinish() noexcept
     {
-        if (sCommandQueues[int(CommandListType::Graphics)])
+        CommandQueue* graphicsQueue = sCommandQueues[int(CommandListType::Graphics)].get();
+        CLR_ASSERT(sFence && graphicsQueue);
+
+        const uint64_t value = sFence->Value;
+        if (SUCCEEDED(graphicsQueue->D3DCommandQueue->Signal(sFence->D3DFence.Get(), value)))
         {
+            if (SUCCEEDED(sFence->D3DFence->SetEventOnCompletion(value, sFenceEvent.Get())))
+            {
+                std::ignore = WaitForSingleObjectEx(sFenceEvent.Get(), INFINITE, FALSE);
+                sFence->Value++;
+            }
         }
     }
 

@@ -13,7 +13,7 @@ namespace CLR::Graphics::Core
     export HCommandList CreateCommandList(HDevice device, CommandListCreateParameters const& createParams);
     export void DestroyCommandList(HCommandList commandList);
 
-    export void WaitForGpuToFinish();
+    export void WaitForGpuToFinish() noexcept;
 
     // TODO: Export or not?
     void CreateCommandQueue(HDevice device, HCommandQueue queue, CommandListType type);
