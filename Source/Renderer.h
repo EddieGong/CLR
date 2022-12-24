@@ -13,6 +13,11 @@ namespace CLR
         Renderer();
         ~Renderer();
 
+        void OnDeviceLost()
+        {}
+        void OnDeviceRestored()
+        {}
+
     private:
         void CreateDeviceIndependentResources();
         void CreateDeviceResources();
@@ -20,11 +25,8 @@ namespace CLR
         void DestroyDeviceResources();
 
     private:
-        GCore::HDevice mDevice                      { 0 };
-        GCore::HCommandQueue mGraphicsCommandQueue  { 0 };
-        GCore::HCommandQueue mComputeCommandQueue   { 0 };
-        GCore::HCommandQueue mCopyCommandQueue      { 0 };
-        GCore::HDisplay mDisplay                    { 0 };
+        GCore::HDevice  mDevice     { 0 };
+        GCore::HDisplay mDisplay    { 0 };
 
         // Display device resolution
         Size mDisplaySize;

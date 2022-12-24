@@ -7,9 +7,7 @@ import <unordered_map>;
 
 export namespace CLR::CmdLineArg
 {
-    using namespace std;
-
-    extern unordered_map<wstring_view, wstring_view> sArgumentMap;
+    extern std::unordered_map<std::wstring_view, std::wstring_view> sArgumentMap;
 
     void Init(int argc, wchar_t** argv);
 
