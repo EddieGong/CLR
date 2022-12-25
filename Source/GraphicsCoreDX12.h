@@ -3,6 +3,8 @@
 // From Agility SDK
 #include <d3d12.h>
 
+#include <functional>
+
 #include "GraphicsCoreTypes.h"
 
 namespace CLR::Graphics::Core
@@ -33,6 +35,9 @@ namespace CLR::Graphics::Core
         D3D_FEATURE_LEVEL       D3DFeatureLevel                             { MinFeatureLevel };
 
         uint32_t                Options                                     { (uint32_t)Option::All };
+
+        std::function<void()>   DeviceLostCallbackFunc;
+        std::function<void()>   DeviceRestoredCallbackFunc;
     };
 
 

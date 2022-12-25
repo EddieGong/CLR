@@ -32,6 +32,16 @@ export namespace CLR::Math
             this->mV = { v0, args... };
         }
 
+        T Dot(Vector<T, N> const& v)
+        {
+            T result = static_cast<T>(0);
+            for (size_t i = 0; i < N; ++i)
+            {
+                result += mV[i] * v.mV[i];
+            }
+            return result;
+        }
+
         inline T operator[](const uint32 index) const { return mV.at(index); }
 
     private:

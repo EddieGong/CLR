@@ -1,6 +1,8 @@
-module CLR.CmdLineArg;
+module;
 
 #include "CLRAssert.h"
+
+module CLR.CmdLineArg;
 
 namespace CLR::CmdLineArg
 {

@@ -1,5 +1,6 @@
 
-#include <Renderer.h>
+#include "CLRAssert.h"
+#include "Renderer.h"
 
 import CLR.Graphics.Core;
 import CLR.CmdLineArg;
@@ -13,6 +14,7 @@ namespace CLR
         CreateDeviceIndependentResources();
         CreateDeviceResources();
     }
+
     Renderer::~Renderer()
     {
         DestroyDeviceResources();
@@ -34,6 +36,9 @@ namespace CLR
             }
 #endif
             mDevice = GCore::CreateDevice(param);
+
+            GCore::RegisterDeviceLostCallbackFunc(mDevice, [this]() { this->OnDeviceLost(); });
+            GCore::RegisterDeviceRestoredCallbackFunc(mDevice, [this]() { this->OnDeviceRestored(); });
         }
 
         {
@@ -47,5 +52,15 @@ namespace CLR
         GCore::DestroyDisplay(mDisplay);
 
         GCore::DestroyDevice(mDevice);
+    }
+
+    void Renderer::OnDeviceLost()
+    {
+        CLR_ASSERT_MSG(false, "Not implemented");
+    }
+
+    void Renderer::OnDeviceRestored()
+    {
+        CLR_ASSERT_MSG(false, "Not implemented");
     }
 }

@@ -182,6 +182,16 @@ namespace CLR::Graphics::Core
         }
     }
 
+    void RegisterDeviceLostCallbackFunc(HDevice device, std::function<void()> func)
+    {
+        device->DeviceLostCallbackFunc = func;
+    }
+
+    void RegisterDeviceRestoredCallbackFunc(HDevice device, std::function<void()> func)
+    {
+        device->DeviceRestoredCallbackFunc = func;
+    }
+
 
     // Internal functions
 

@@ -13,16 +13,14 @@ namespace CLR
         Renderer();
         ~Renderer();
 
-        void OnDeviceLost()
-        {}
-        void OnDeviceRestored()
-        {}
-
     private:
         void CreateDeviceIndependentResources();
         void CreateDeviceResources();
 
         void DestroyDeviceResources();
+
+        void OnDeviceLost();
+        void OnDeviceRestored();
 
     private:
         GCore::HDevice  mDevice     { 0 };

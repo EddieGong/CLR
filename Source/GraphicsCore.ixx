@@ -1,3 +1,7 @@
+module;
+
+#include <functional>
+
 export module CLR.Graphics.Core;
 
 import "GraphicsCoreTypes.h";
@@ -14,6 +18,9 @@ namespace CLR::Graphics::Core
     export void DestroyCommandList(HCommandList commandList);
 
     export void WaitForGpuToFinish() noexcept;
+
+    export void RegisterDeviceLostCallbackFunc(HDevice device, std::function<void()> func);
+    export void RegisterDeviceRestoredCallbackFunc(HDevice device, std::function<void()> func);
 
     // TODO: Export or not?
     void CreateCommandQueue(HDevice device, HCommandQueue queue, CommandListType type);

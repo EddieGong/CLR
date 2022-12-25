@@ -29,7 +29,12 @@ namespace UnitTest
 			Logger::WriteMessage("Hello CLR Unit Test.");
 
 			char vec_str[256]{};
-			sprintf_s(vec_str, "vec.x = %f, vec.y = %f, vec.z = %f", vec3_b[0], vec3_b[1], vec3_b[2]);
+			sprintf_s(vec_str, "vec.x = %f, vec.y = %f, vec.z = %f\n", vec3_b[0], vec3_b[1], vec3_b[2]);
+			Logger::WriteMessage(vec_str);
+
+			Math::Vector3f vec3_d(3.f, 0.f, -1.f);
+			Math::Vector3f vec3_e(2.f, 1.f, 2.f);
+			sprintf_s(vec_str, "dot result = %f", vec3_d.Dot(vec3_e));
 			Logger::WriteMessage(vec_str);
 		}
 
