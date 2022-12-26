@@ -9,6 +9,8 @@ export namespace CLR::Math
     template<typename T, size_t N>
     class Vector
     {
+        using Vec = Vector<T, N>;
+
         static_assert(N > 1 && N < 5);
 
     public:
@@ -32,7 +34,7 @@ export namespace CLR::Math
             this->mV = { v0, args... };
         }
 
-        T Dot(Vector<T, N> const& v)
+        T Dot(Vec const& v)
         {
             T result = static_cast<T>(0);
             for (size_t i = 0; i < N; ++i)
@@ -43,6 +45,8 @@ export namespace CLR::Math
         }
 
         inline T operator[](const uint32 index) const { return mV.at(index); }
+
+        //inline Vec operator+(Vec const& vec)
 
     private:
         std::array<T, N> mV;
