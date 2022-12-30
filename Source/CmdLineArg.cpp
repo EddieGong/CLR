@@ -8,8 +8,6 @@ namespace CLR::CmdLineArg
 {
     using namespace std;
 
-    unordered_map<wstring_view, wstring_view> sArgumentMap;
-
     void Init(int argc, wchar_t** argv)
     {
         if (argc > 1)
@@ -28,6 +26,5 @@ namespace CLR::CmdLineArg
                 }
             }
         }
-
     }
 }
