@@ -34,7 +34,7 @@ namespace CLR::Graphics::Core
 		DWORD                   DXGIFactoryFlags                            { 0 };
         D3D_FEATURE_LEVEL       D3DFeatureLevel                             { MinFeatureLevel };
 
-        uint32_t                Options                                     { (uint32_t)Option::All };
+        uint32                  Options                                     { (uint32)Option::All };
 
         std::function<void()>   DeviceLostCallbackFunc;
         std::function<void()>   DeviceRestoredCallbackFunc;
@@ -47,7 +47,7 @@ namespace CLR::Graphics::Core
         ComPtr<IDXGUISwapChainX>        SwapChain           { 0 };
         ComPtr<ID3D12DescriptorHeap>    DescriptorHeapRTV   { 0 };
         ComPtr<ID3D12DescriptorHeap>    DescriptorHeapDSV   { 0 };
-        uint32_t                        DescriptorSize      { 0 };
+        uint32                          DescriptorSize      { 0 };
         DXGI_FORMAT                     BackBufferFormat    { DXGI_FORMAT_UNKNOWN };
         DXGI_FORMAT                     DepthBufferFormat   { DXGI_FORMAT_UNKNOWN };
     };
@@ -56,8 +56,8 @@ namespace CLR::Graphics::Core
     // Command
     struct CommandQueue
     {
-        ComPtr<ID3D12CommandQueue>  D3DCommandQueue{ 0 };
-        D3D12_COMMAND_LIST_TYPE     Type{ D3D12_COMMAND_LIST_TYPE_NONE };
+        ComPtr<ID3D12CommandQueue>  D3DCommandQueue { 0 };
+        D3D12_COMMAND_LIST_TYPE     Type            { D3D12_COMMAND_LIST_TYPE_NONE };
     };
 
     struct CommandList
@@ -73,13 +73,13 @@ namespace CLR::Graphics::Core
     struct Fence
     {
         ComPtr<ID3D12FenceX> D3DFence   { 0 };
-        uint64_t             Value      { 0 };
+        uint64               Value      { 0 };
     };
 
     // Internal functions
     void EnableDebugLayer(Device* device, bool debugLayerEnabled);
 
-    void CheckVariableRefreshRateSupport(IDXGIFactoryX* dxgiFactory, uint32_t& options);
+    void CheckVariableRefreshRateSupport(IDXGIFactoryX* dxgiFactory, uint32& options);
     
     void GetAdapter(IDXGIFactoryX* dxgiFactory, IDXGIAdapter1*& dxgiAdapter, D3D_FEATURE_LEVEL featureLevel, bool highPerf = true);
 
