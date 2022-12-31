@@ -23,7 +23,16 @@ namespace CLR::Graphics::Core
 
     enum class SurfaceFormat
     {
-        UNKNOWN = 0
+        UNKNOWN = 0,
+
+        // Unsigned
+        BGRA8,
+
+        // Depth
+        D16,
+        D24_S8,
+        D32F,
+        D32F_S8,
     };
 
 

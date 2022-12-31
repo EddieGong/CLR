@@ -92,4 +92,6 @@ namespace CLR::Graphics::Core
     {
         obj->SetName(name == nullptr ? L"NULL" : name);
     }
+
+    DXGI_FORMAT GetInternalFormat(SurfaceFormat format);
 }

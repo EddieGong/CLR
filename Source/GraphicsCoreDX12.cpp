@@ -321,4 +321,33 @@ namespace CLR::Graphics::Core
         CLR_ASSERT_MSG(internalType != D3D12_COMMAND_LIST_TYPE_NONE, "Can't find correct D3D12 command queue type");
         return internalType;
     }
+
+    DXGI_FORMAT GetInternalFormat(SurfaceFormat format)
+    {
+        DXGI_FORMAT internal_format = DXGI_FORMAT_UNKNOWN;
+        switch (format)
+        {
+        // Unsigned
+        case SurfaceFormat::BGRA8:
+            internal_format = DXGI_FORMAT_B8G8R8A8_UNORM;
+            break;
+
+        // Depth
+        case SurfaceFormat::D16:
+            internal_format = DXGI_FORMAT_D16_UNORM;
+            break;
+        case SurfaceFormat::D24_S8:
+            internal_format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+            break;
+        case SurfaceFormat::D32F:
+            internal_format = DXGI_FORMAT_D32_FLOAT;
+            break;
+        case SurfaceFormat::D32F_S8:
+            internal_format = DXGI_FORMAT_D32_FLOAT_S8X24_UINT;
+            break;
+        }
+
+        CLR_ASSERT_MSG(internal_format != DXGI_FORMAT_UNKNOWN, "Unsupported format!");
+        return internal_format;       
+    }
 }
