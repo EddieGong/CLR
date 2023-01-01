@@ -34,6 +34,8 @@ Game::~Game()
     {
         m_deviceResources->WaitForGpu();
     }
+
+    mRenderer->WaitForGpu();
 }
 
 // Initialize the Direct3D resources required to run.

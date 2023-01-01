@@ -13,6 +13,9 @@ namespace CLR
         Renderer();
         ~Renderer();
 
+    public:
+        void WaitForGpu();
+
     private:
         void CreateDeviceIndependentResources();
         void CreateDeviceResources();

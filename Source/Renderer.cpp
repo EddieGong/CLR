@@ -20,6 +20,11 @@ namespace CLR
         DestroyDeviceResources();
     }
 
+    void Renderer::WaitForGpu()
+    {
+        GCore::WaitForGpuToFinish();
+    }
+
     void Renderer::CreateDeviceIndependentResources()
     {
         // Direct2D, DirectWrite
