@@ -1,7 +1,9 @@
 #pragma once
 
-#include <BasicTypes.h>
-#include <GraphicsCoreTypes.h>
+#include <any>
+
+#include "BasicTypes.h"
+#include "GraphicsCoreTypes.h"
 
 namespace CLR
 {
@@ -10,10 +12,17 @@ namespace CLR
     class Renderer
     {
     public:
-        Renderer();
+        Renderer() noexcept(false);
         ~Renderer();
 
+        Renderer(Renderer const&)             = delete;
+        Renderer& operator= (Renderer const&) = delete;
+
     public:
+        void Draw();
+
+        void SetWindow(std::any window);
+
         void WaitForGpu();
 
     private:
@@ -28,6 +37,8 @@ namespace CLR
     private:
         GCore::HDevice  mDevice     { 0 };
         GCore::HDisplay mDisplay    { 0 };
+
+        std::any mWindow;
 
         // Display device resolution
         Size mDisplaySize;

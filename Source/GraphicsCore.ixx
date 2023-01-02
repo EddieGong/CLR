@@ -1,5 +1,6 @@
 module;
 
+#include <any>
 #include <functional>
 
 export module CLR.Graphics.Core;

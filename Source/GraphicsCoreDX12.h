@@ -50,6 +50,8 @@ namespace CLR::Graphics::Core
         uint32                          DescriptorSize      { 0 };
         DXGI_FORMAT                     BackBufferFormat    { DXGI_FORMAT_UNKNOWN };
         DXGI_FORMAT                     DepthBufferFormat   { DXGI_FORMAT_UNKNOWN };
+
+        HWND                            WindowHandle        { 0 };
     };
 
 

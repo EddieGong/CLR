@@ -35,7 +35,10 @@ Game::~Game()
         m_deviceResources->WaitForGpu();
     }
 
-    mRenderer->WaitForGpu();
+    if (mRenderer)
+    {
+        mRenderer->WaitForGpu();
+    }
 }
 
 // Initialize the Direct3D resources required to run.
@@ -48,6 +51,8 @@ void Game::Initialize(HWND window, int width, int height)
 
     m_deviceResources->CreateWindowSizeDependentResources();
     CreateWindowSizeDependentResources();
+
+    mRenderer->SetWindow(window);
 
     // TODO: Change the timer settings if you want something other than the default variable timestep mode.
     // e.g. for 60 FPS fixed timestep update logic, call:
@@ -108,6 +113,9 @@ void Game::Render()
     PIXBeginEvent(m_deviceResources->GetCommandQueue(), PIX_COLOR_DEFAULT, L"Present"); // See pch.h for info
     m_deviceResources->Present();
     PIXEndEvent(m_deviceResources->GetCommandQueue());
+
+    // TODO: It's for test now.//
+    mRenderer->Draw();
 }
 
 // Helper method to clear the back buffers.

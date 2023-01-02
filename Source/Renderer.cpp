@@ -20,6 +20,15 @@ namespace CLR
         DestroyDeviceResources();
     }
 
+    void Renderer::Draw()
+    {
+    }
+
+    void Renderer::SetWindow(std::any window)
+    {
+        mWindow = window;
+    }
+
     void Renderer::WaitForGpu()
     {
         GCore::WaitForGpuToFinish();
