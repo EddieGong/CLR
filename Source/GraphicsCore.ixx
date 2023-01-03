@@ -1,11 +1,10 @@
 module;
 
-#include <any>
 #include <functional>
 
-export module CLR.Graphics.Core;
+#include "GraphicsCoreTypes.h"
 
-import "GraphicsCoreTypes.h";
+export module CLR.Graphics.Core;
 
 namespace CLR::Graphics::Core
 {

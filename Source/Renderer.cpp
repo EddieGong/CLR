@@ -9,10 +9,9 @@ namespace CLR
 {
     namespace GCore = Graphics::Core;
 
-    Renderer::Renderer()
+    Renderer::Renderer() noexcept(false)
     {
         CreateDeviceIndependentResources();
-        CreateDeviceResources();
     }
 
     Renderer::~Renderer()
@@ -20,13 +19,15 @@ namespace CLR
         DestroyDeviceResources();
     }
 
-    void Renderer::Draw()
-    {
-    }
-
-    void Renderer::SetWindow(std::any window)
+    void Renderer::Init(std::any window) noexcept(false)
     {
         mWindow = window;
+
+        CreateDeviceResources();
+    }
+
+    void Renderer::Draw()
+    {
     }
 
     void Renderer::WaitForGpu()
@@ -57,6 +58,7 @@ namespace CLR
 
         {
             GCore::DisplayCreateParameters params{};
+            params.WindowHandle = mWindow;
             mDisplay = GCore::CreateDisplay(mDevice, params);
         }
     }

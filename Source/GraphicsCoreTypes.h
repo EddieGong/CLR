@@ -1,5 +1,6 @@
 #pragma once
 
+#include <any>
 #include "BasicTypes.h"
 
 namespace CLR::Graphics::Core
@@ -65,6 +66,8 @@ namespace CLR::Graphics::Core
     {
         SurfaceFormat BackBufferFormat  { SurfaceFormat::UNKNOWN };
         SurfaceFormat DepthBufferFormat { SurfaceFormat::UNKNOWN };
+
+        std::any WindowHandle;
     };
 
     struct Display;
