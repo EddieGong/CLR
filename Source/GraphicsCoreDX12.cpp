@@ -19,35 +19,47 @@ using EventWrapper = Microsoft::WRL::Wrappers::Event;
 
 namespace CLR::Graphics::Core
 {
-    std::unique_ptr<Device>         sDevice;
-    std::unique_ptr<CommandQueue>   sCommandQueues[int32(CommandListType::Count)];
-    std::unique_ptr<Display>        sDisplay;
+    namespace
+    {
+        std::unique_ptr<Device>         sDevice;
+        std::unique_ptr<CommandQueue>   sCommandQueues[int32(CommandListType::Count)];
+        std::unique_ptr<Display>        sDisplay;
 
-    EventWrapper                    sFenceEvent;
-    std::unique_ptr<Fence>          sFence;
+        EventWrapper                    sFenceEvent;
+        std::unique_ptr<Fence>          sFence;
 
-    uint32                          sBackBufferIndex { 0 };
+        uint32                          sBackBufferIndex{ 0 };
+    }
 
     HDevice CreateDevice(DeviceCreateParameters const& createParams)
     {       
         sDevice = std::make_unique<Device>();
         Device* device = sDevice.get();
 
-        EnableDebugLayer(device, createParams.DebugLayerEnabled);
-
+        const bool debugLayerEnabled = EnableDebugLayer(createParams.DebugLayerEnabled);
+        if (debugLayerEnabled)
+        {
+            device->DXGIFactoryFlags = DXGI_CREATE_FACTORY_DEBUG;
+        }
         ThrowIfFailed(CreateDXGIFactory2(device->DXGIFactoryFlags, IID_PPV_ARGS(device->DXGIFactory.ReleaseAndGetAddressOf())));
-        CheckVariableRefreshRateSupport(device->DXGIFactory.Get(), device->Options);
+
+        IDXGIFactoryX* dxgiFactory = device->DXGIFactory.Get();
+        CheckVariableRefreshRateSupport(dxgiFactory, device->Options);
 
         ComPtr<IDXGIAdapter1> dxgiAdapter;
-        GetAdapter(device->DXGIFactory.Get(), *dxgiAdapter.GetAddressOf(), device->MinFeatureLevel);
+        GetAdapter(dxgiFactory, *dxgiAdapter.GetAddressOf(), device->MinFeatureLevel);
 
         HRESULT hr = D3D12CreateDevice(dxgiAdapter.Get(), device->MinFeatureLevel, IID_PPV_ARGS(device->D3DDevice.ReleaseAndGetAddressOf()));
         ThrowIfFailed(hr);
         device->D3DDevice->SetName(L"D3D12 Device (CLR)");
+        ID3D12DeviceX* d3dDevice = device->D3DDevice.Get();
 
-        // TODO: Use ID3D12InfoQueue to configure debug devie?
+        if (debugLayerEnabled)
+        {
+            UpdateDebugDeviceConfig(device->D3DDevice);
+        }
 
-        device->D3DFeatureLevel = GetMaxSupportedFeatureLevel(device->D3DDevice.Get(), device->MinFeatureLevel);
+        device->D3DFeatureLevel = GetMaxSupportedFeatureLevel(d3dDevice, device->MinFeatureLevel);
 
         std::array<CommandListType, size_t(CommandListType::Count)> commandListTypes = { CommandListType::Graphics, CommandListType::Compute, CommandListType::Copy };
         for (auto type : commandListTypes)
@@ -56,9 +68,14 @@ namespace CLR::Graphics::Core
             CreateCommandQueue(device, sCommandQueues[size_t(type)].get(), type);
         }
 
+
+
+        // ED: Continue
+
+
         // TODO: Move it out of CreateDevice function
         sFence = std::make_unique<Fence>();
-        ThrowIfFailed(device->D3DDevice->CreateFence(sFence->Value, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(sFence->D3DFence.ReleaseAndGetAddressOf())));
+        ThrowIfFailed(d3dDevice->CreateFence(sFence->Value, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(sFence->D3DFence.ReleaseAndGetAddressOf())));
         sFence->Value++;
 
         sFenceEvent.Attach(CreateEventEx(nullptr, nullptr, 0, EVENT_MODIFY_STATE | SYNCHRONIZE));
@@ -195,11 +212,9 @@ namespace CLR::Graphics::Core
 
     // Internal functions
 
-    void EnableDebugLayer(Device* device, bool debugLayerEnabled)
+    bool EnableDebugLayer(bool debugLayerEnabled)
     {
 #if defined(_DEBUG)
-        // Enable the debug layer (requires the Graphics Tools "optional feature").
-        //
         // NOTE: Enabling the debug layer after device creation will invalidate the active device.
         if (debugLayerEnabled)
         {
@@ -216,13 +231,27 @@ namespace CLR::Graphics::Core
             ComPtr<IDXGIInfoQueue> dxgiInfoQueue;
             if (SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(dxgiInfoQueue.GetAddressOf()))))
             {
-                device->DXGIFactoryFlags = DXGI_CREATE_FACTORY_DEBUG;
-
                 dxgiInfoQueue->SetBreakOnSeverity(DXGI_DEBUG_ALL, DXGI_INFO_QUEUE_MESSAGE_SEVERITY_ERROR, true);
                 dxgiInfoQueue->SetBreakOnSeverity(DXGI_DEBUG_ALL, DXGI_INFO_QUEUE_MESSAGE_SEVERITY_CORRUPTION, true);
 
-                // TODO: filters?
+                // TODO: AddStorageFilterEntries
+                return true;
             }
+        }
+#endif
+        return false;
+    }
+
+    void UpdateDebugDeviceConfig(ComPtr<ID3D12DeviceX> d3dDevice)
+    {
+#if defined(_DEBUG)
+        ComPtr<ID3D12InfoQueue> d3dInfoQueue;
+        if (SUCCEEDED(d3dDevice.As(&d3dInfoQueue)))
+        {
+            d3dInfoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
+            d3dInfoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);
+
+            // TODO: AddStorageFilterEntries
         }
 #endif
     }
@@ -258,7 +287,16 @@ namespace CLR::Graphics::Core
             }
         }
 
-        // TODO: try warp12 instead
+        if (adapter == nullptr)
+        {
+            LOG_DEBUG_INFO("WARNING: It is using WARP12");
+
+            // Try WARP12 instead
+            if (FAILED(dxgiFactory->EnumWarpAdapter(IID_PPV_ARGS(adapter.ReleaseAndGetAddressOf()))))
+            {
+                throw std::runtime_error("WARP12 not available. Enable the 'Graphics Tools' optional feature");
+            }
+        }
 
         if (adapter == nullptr)
         {
@@ -268,23 +306,23 @@ namespace CLR::Graphics::Core
         dxgiAdapter = adapter.Detach();
     }
 
-    void CheckVariableRefreshRateSupport(IDXGIFactoryX* dxgiFactory, uint32_t& options)
+    void CheckVariableRefreshRateSupport(IDXGIFactoryX* dxgiFactory, uint32& options)
     {
         // Ref: Variable refresh-rate displays https://walbourn.github.io/care-and-feeding-of-modern-swap-chains-3/
-        if (options & (uint32_t)Option::AllowTearing)
+        if (options & uint32(Option::AllowTearing))
         {
             // TONOTE: can't use bool because CheckFeatureSupport needs a 32 bits type
             BOOL allowTearing = false;
             HRESULT hr = dxgiFactory->CheckFeatureSupport(DXGI_FEATURE_PRESENT_ALLOW_TEARING, &allowTearing, sizeof(allowTearing));
             if (FAILED(hr) || !allowTearing)
             {
-                options &= ~((uint32_t)Option::AllowTearing);
+                options &= ~(uint32(Option::AllowTearing));
                 LOG_DEBUG_INFO("WARNING: Variable refresh rate displays not supported");
             }
         }
     }
 
-    D3D_FEATURE_LEVEL GetMaxSupportedFeatureLevel(ID3D12Device* d3dDevice, D3D_FEATURE_LEVEL minFeatureLevel)
+    D3D_FEATURE_LEVEL GetMaxSupportedFeatureLevel(ID3D12DeviceX* d3dDevice, D3D_FEATURE_LEVEL minFeatureLevel)
     {
         static const D3D_FEATURE_LEVEL sFeatureLevels[] =
         {

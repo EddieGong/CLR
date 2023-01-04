@@ -11,6 +11,7 @@ namespace CLR::Graphics::Core
 {
     using Microsoft::WRL::ComPtr;
 
+    using ID3D12DeviceX              = ID3D12Device10;
     using IDXGIFactoryX              = IDXGIFactory6;
     using ID3D12GraphicsCommandListX = ID3D12GraphicsCommandList5;
     using IDXGUISwapChainX           = IDXGISwapChain4;
@@ -18,11 +19,10 @@ namespace CLR::Graphics::Core
 
     static const uint32 sBackBufferCount = 3;
 
-
     // Device
     struct Device
     {
-		ComPtr<ID3D12Device>    D3DDevice                                   { 0 };
+		ComPtr<ID3D12DeviceX>   D3DDevice                                   { 0 };
 
         ComPtr<IDXGIFactoryX>   DXGIFactory                                 { 0 };
 
@@ -79,13 +79,14 @@ namespace CLR::Graphics::Core
     };
 
     // Internal functions
-    void EnableDebugLayer(Device* device, bool debugLayerEnabled);
+    bool EnableDebugLayer(bool debugLayerEnabled);
+    void UpdateDebugDeviceConfig(ComPtr<ID3D12DeviceX> d3dDevice);
 
     void CheckVariableRefreshRateSupport(IDXGIFactoryX* dxgiFactory, uint32& options);
     
     void GetAdapter(IDXGIFactoryX* dxgiFactory, IDXGIAdapter1*& dxgiAdapter, D3D_FEATURE_LEVEL featureLevel, bool highPerf = true);
 
-    D3D_FEATURE_LEVEL GetMaxSupportedFeatureLevel(ID3D12Device* d3dDevice, D3D_FEATURE_LEVEL minFeatureLevel);
+    D3D_FEATURE_LEVEL GetMaxSupportedFeatureLevel(ID3D12DeviceX* d3dDevice, D3D_FEATURE_LEVEL minFeatureLevel);
 
     D3D12_COMMAND_LIST_TYPE GetInternalCommandListType(CommandListType type);
 
