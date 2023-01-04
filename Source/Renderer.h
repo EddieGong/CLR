@@ -19,9 +19,9 @@ namespace CLR
         Renderer& operator= (Renderer const&) = delete;
 
     public:
-        void Draw();
+        void Init(std::any window) noexcept(false);
 
-        void SetWindow(std::any window);
+        void Draw();
 
         void WaitForGpu();
 
