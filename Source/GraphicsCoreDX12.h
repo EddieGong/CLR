@@ -82,6 +82,7 @@ namespace CLR::Graphics::Core
     bool EnableDebugLayer(bool debugLayerEnabled);
     void UpdateDebugDeviceConfig(ComPtr<ID3D12DeviceX> d3dDevice);
 
+    // TONOTE: DXGI_FEATURE_PRESENT_ALLOW_TEARING is the only feature D3D has atm, so there is no obvious reason to make the function be more generic
     void CheckVariableRefreshRateSupport(IDXGIFactoryX* dxgiFactory, uint32& options);
     
     void GetAdapter(IDXGIFactoryX* dxgiFactory, IDXGIAdapter1*& dxgiAdapter, D3D_FEATURE_LEVEL featureLevel, bool highPerf = true);
