@@ -23,6 +23,7 @@
     <ClCompile Include="..\Source\Utils.ixx" />
     <ClCompile Include="..\Source\Vector.ixx" />
     <ClCompile Include="UnitTest.cpp" />
+    <ClCompile Include="UnitTestSrc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -31,6 +32,9 @@
     <ProjectReference Include="..\SharedSTLHeaderUnits\SharedSTLHeaderUnits.vcxproj">
       <Project>{61cd105c-a6e3-4a46-b58e-cc5feca478c7}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="UnitTestInc.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

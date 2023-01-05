@@ -61,6 +61,8 @@ namespace CLR::Graphics::Core
 
         device->D3DFeatureLevel = GetMaxSupportedFeatureLevel(d3dDevice, device->MinFeatureLevel);
 
+
+        // Command Queue creation. It might be better to tigger the code outside of the create device function.
         std::array<CommandListType, size_t(CommandListType::Count)> commandListTypes = { CommandListType::Graphics, CommandListType::Compute, CommandListType::Copy };
         for (auto type : commandListTypes)
         {

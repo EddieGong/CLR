@@ -1,5 +1,6 @@
 
 #include "CppUnitTest.h"
+#include "UnitTestInc.h"
 
 import <memory>;
 import <format>;
@@ -54,6 +55,11 @@ namespace UnitTest
 
 			str = std::format("std::size = {}\n", std::size(testArray));
 			Logger::WriteMessage(str.c_str());
+		}
+
+		TEST_METHOD(Namespace)
+		{
+			// Can't access GlobalCheckFlag because it's defined in a unnamed namespace;
 		}
 	};
 }

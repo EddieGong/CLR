@@ -24,8 +24,16 @@
     <ClCompile Include="..\Source\Vector.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UnitTestSrc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="UnitTestInc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
