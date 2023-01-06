@@ -52,7 +52,7 @@ namespace CLR
 #endif
             mDevice = GCore::CreateDevice(param);
 
-            GCore::RegisterDeviceLostCallbackFunc(mDevice, [this]() { this->OnDeviceLost(); });
+            GCore::RegisterDeviceLostCallbackFunc    (mDevice, [this]() { this->OnDeviceLost(); });
             GCore::RegisterDeviceRestoredCallbackFunc(mDevice, [this]() { this->OnDeviceRestored(); });
         }
 

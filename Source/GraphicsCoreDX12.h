@@ -47,7 +47,6 @@ namespace CLR::Graphics::Core
         ComPtr<IDXGUISwapChainX>        SwapChain           { 0 };
         ComPtr<ID3D12DescriptorHeap>    DescriptorHeapRTV   { 0 };
         ComPtr<ID3D12DescriptorHeap>    DescriptorHeapDSV   { 0 };
-        uint32                          DescriptorSize      { 0 };
         DXGI_FORMAT                     BackBufferFormat    { DXGI_FORMAT_UNKNOWN };
         DXGI_FORMAT                     DepthBufferFormat   { DXGI_FORMAT_UNKNOWN };
 

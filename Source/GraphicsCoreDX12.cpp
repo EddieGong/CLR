@@ -27,8 +27,10 @@ namespace CLR::Graphics::Core
 
         EventWrapper                    sFenceEvent;
         std::unique_ptr<Fence>          sFence;
-
+        
         uint32                          sBackBufferIndex{ 0 };
+
+        uint32                          sDescriptorSizes[D3D12_DESCRIPTOR_HEAP_TYPE_NUM_TYPES];
     }
 
     HDevice CreateDevice(DeviceCreateParameters const& createParams)
@@ -74,6 +76,18 @@ namespace CLR::Graphics::Core
 
         // ED: Continue
 
+        for (auto type = 0; type < D3D12_DESCRIPTOR_HEAP_TYPE_NUM_TYPES; ++type)
+        {
+            sDescriptorSizes[type] = device->D3DDevice->GetDescriptorHandleIncrementSize(static_cast<D3D12_DESCRIPTOR_HEAP_TYPE>(type));
+
+            // TODO: Better loginfo function
+            char str[256] = {};
+            sprintf_s(str, "Type : %i, Size : %i\n", type, sDescriptorSizes[type]);
+            LOG_INFO(str);
+        }
+
+
+
 
         // TODO: Move it out of CreateDevice function
         sFence = std::make_unique<Fence>();
@@ -101,11 +115,10 @@ namespace CLR::Graphics::Core
 
         D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDescRTV {};
         descriptorHeapDescRTV.NumDescriptors = sBackBufferCount;
-        descriptorHeapDescRTV.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
-
+        descriptorHeapDescRTV.Type           = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
         ThrowIfFailed(device->D3DDevice->CreateDescriptorHeap(&descriptorHeapDescRTV, IID_PPV_ARGS(display->DescriptorHeapRTV.ReleaseAndGetAddressOf())));
+
         display->DescriptorHeapRTV->SetName(L"Display Descriptor Heap RTV");
-        display->DescriptorSize = device->D3DDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
         if (createParams.DepthBufferFormat != SurfaceFormat::UNKNOWN)
         {
