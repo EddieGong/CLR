@@ -79,11 +79,8 @@ namespace CLR::Graphics::Core
         for (auto type = 0; type < D3D12_DESCRIPTOR_HEAP_TYPE_NUM_TYPES; ++type)
         {
             sDescriptorSizes[type] = device->D3DDevice->GetDescriptorHandleIncrementSize(static_cast<D3D12_DESCRIPTOR_HEAP_TYPE>(type));
-
-            // TODO: Better loginfo function
-            char str[256] = {};
-            sprintf_s(str, "Type : %i, Size : %i\n", type, sDescriptorSizes[type]);
-            LOG_INFO(str);
+            // TODO: convert enum to str
+            LOG_INFO("Type : %i, Size : %i\n", type, sDescriptorSizes[type]);
         }
 
 
