@@ -80,7 +80,7 @@ namespace CLR::Graphics::Core
         {
             sDescriptorSizes[type] = device->D3DDevice->GetDescriptorHandleIncrementSize(static_cast<D3D12_DESCRIPTOR_HEAP_TYPE>(type));
             // TODO: convert enum to str
-            LOG_INFO("Type : %i, Size : %i\n", type, sDescriptorSizes[type]);
+            LOG_INFO("Descriptor Type : %i, Size : %i\n", type, sDescriptorSizes[type]);
         }
 
 
@@ -125,6 +125,12 @@ namespace CLR::Graphics::Core
 
             ThrowIfFailed(device->D3DDevice->CreateDescriptorHeap(&descriptorHeapDescDSV, IID_PPV_ARGS(display->DescriptorHeapDSV.ReleaseAndGetAddressOf())));
             display->DescriptorHeapDSV->SetName(L"Display Descriptor Heap DSV");
+        }
+
+        display->WindowHandle = std::any_cast<HWND>(createParams.WindowHandle);
+        if (!display->WindowHandle)
+        {
+            throw std::logic_error("Set DisplayCreateParameters with a valid window handle");
         }
 
         return display;
