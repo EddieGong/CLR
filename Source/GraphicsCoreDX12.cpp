@@ -80,7 +80,7 @@ namespace CLR::Graphics::Core
         {
             sDescriptorSizes[type] = device->D3DDevice->GetDescriptorHandleIncrementSize(static_cast<D3D12_DESCRIPTOR_HEAP_TYPE>(type));
             // TODO: convert enum to str
-            LOG_INFO("Descriptor Type : %i, Size : %i\n", type, sDescriptorSizes[type]);
+            LOG_INFO("Descriptor Type : {}, Size : {}", type, sDescriptorSizes[type]);
         }
 
 

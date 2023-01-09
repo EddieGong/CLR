@@ -1,6 +1,6 @@
 module;
 
-#include <cstdio>
+#include <format>
 
 export module CLR.Utils;
 
@@ -22,9 +22,11 @@ namespace CLR
     export template<typename... Args>
     void LOG_INFO(char const* format, const Args& ...args)
     {
-        char str[256] = {};
-        sprintf_s(str, format, args...);
-        LogInternal(str);
+        // TODO: read https://en.cppreference.com/w/cpp/utility/format/format
+        // As of P2216R3, it is an error if the format string is not a constant expression.std::vformat can be used in this case.
+        std::string str = std::vformat(format, std::make_format_args(args...));
+        str += '\n';
+        LogInternal(str.c_str());
     }
 
     export template<typename... Args>
