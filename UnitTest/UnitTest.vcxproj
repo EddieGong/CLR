@@ -20,6 +20,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\EnumUtils.ixx" />
     <ClCompile Include="..\Source\Utils.ixx" />
     <ClCompile Include="..\Source\Vector.ixx" />
     <ClCompile Include="UnitTest.cpp" />

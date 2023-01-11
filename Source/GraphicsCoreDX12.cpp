@@ -13,6 +13,7 @@ module CLR.Graphics.Core;
 
 import CLR.Math.Vector;
 import CLR.Utils;
+import CLR.EnumUtils;
 
 using Microsoft::WRL::ComPtr;
 using EventWrapper = Microsoft::WRL::Wrappers::Event;
@@ -72,8 +73,6 @@ namespace CLR::Graphics::Core
             CreateCommandQueue(device, sCommandQueues[size_t(type)].get(), type);
         }
 
-
-
         // ED: Continue
 
         for (auto type = 0; type < D3D12_DESCRIPTOR_HEAP_TYPE_NUM_TYPES; ++type)
@@ -82,8 +81,6 @@ namespace CLR::Graphics::Core
             // TODO: convert enum to str
             LOG_INFO("Descriptor Type : {}, Size : {}", type, sDescriptorSizes[type]);
         }
-
-
 
 
         // TODO: Move it out of CreateDevice function

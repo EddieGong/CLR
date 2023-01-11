@@ -187,7 +187,7 @@
   <ItemGroup>
     <ClCompile Include="..\Source\CmdLineArg.cpp" />
     <ClCompile Include="..\Source\CmdLineArg.ixx" />
-    <ClCompile Include="..\Source\EnumIterator.ixx" />
+    <ClCompile Include="..\Source\EnumUtils.ixx" />
     <ClCompile Include="..\Source\GraphicsCore.ixx" />
     <ClCompile Include="..\Source\GraphicsCoreDX12.cpp" />
     <ClCompile Include="..\Source\Renderer.cpp" />

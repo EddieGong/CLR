@@ -6,6 +6,7 @@ import <memory>;
 import <format>;
 import CLR.Utils;
 import CLR.Math.Vector;
+import CLR.EnumUtils;
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -60,6 +61,24 @@ namespace UnitTest
 		TEST_METHOD(Namespace)
 		{
 			// Can't access GlobalCheckFlag because it's defined in a unnamed namespace;
+		}
+
+		TEST_METHOD(EnumUtils)
+		{
+			enum class TestRenderingEnum
+			{
+				Graphics,
+				Compute,
+				Copy,
+				Count
+			};
+
+			for (auto type : EnumIterator<TestRenderingEnum>())
+			{
+				const char* enumName = MapEnum(type, { "Graphics", "Compute", "Copy" });
+				Logger::WriteMessage(enumName);
+				Logger::WriteMessage("\n");
+			}
 		}
 	};
 }
